@@ -1,5 +1,5 @@
 # Learning
 
-###Day1
+### Day1
 1. HackerRank quetion solving
 2. Recalling the basics of python
