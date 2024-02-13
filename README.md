@@ -10,3 +10,5 @@
 ### Day3
 1.Python, SQL concept
 2.Python quetions HackerRank
+### Day4
+1.started learning new concept of python
