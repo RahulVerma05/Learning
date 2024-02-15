@@ -16,3 +16,6 @@
 1.Completed Excel course
 2.SQL, Python video halfway
 3.SQL, Pyhton HackerRank quetion
+### Day6
+1.trying to learn new concpet to solve py question
+2. SQL is running smooth
