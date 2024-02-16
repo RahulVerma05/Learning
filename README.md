@@ -19,3 +19,6 @@
 ### Day6
 1.trying to learn new concpet to solve py question
 2. SQL is running smooth
+### Day7
+1.Learnig sets in python
+2.SQL Joins
