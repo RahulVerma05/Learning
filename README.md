@@ -22,3 +22,6 @@
 ### Day7
 1.Learnig sets in python
 2.SQL Joins
+### Day8
+1.SQL sets and some py revision
+### Day9
