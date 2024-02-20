@@ -26,3 +26,6 @@
 1.SQL sets and some py revision
 ### Day9
 1. Python question HAckerRank
+### Day10
+1. python gold done
+2. SQL coures and quetions
