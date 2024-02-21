@@ -29,3 +29,5 @@
 ### Day10
 1. python gold done
 2. SQL coures and quetions
+### Day11
+1. SQL and python quetions
