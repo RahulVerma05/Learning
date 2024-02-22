@@ -31,3 +31,6 @@
 2. SQL coures and quetions
 ### Day11
 1. SQL and python quetions
+### Day12
+1. SQL 2 topics done
+2. python question problem found :)
