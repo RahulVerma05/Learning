@@ -34,3 +34,6 @@
 ### Day12
 1. SQL 2 topics done
 2. python question problem found :)
+### Day13
+1.solved almost all easy difficulty quetion of sql hackerrank
+2.python 2 topics done 
