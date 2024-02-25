@@ -39,3 +39,5 @@
 2.python 2 topics done 
 ### Day14 
 1. able to maintain daliy question solveing streak
+### Day15
+1. Learn using case statment in sql
