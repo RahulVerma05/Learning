@@ -41,3 +41,5 @@
 1. able to maintain daliy question solveing streak
 ### Day15
 1. Learn using case statment in sql
+### Day 16
+1. Python string quetions
