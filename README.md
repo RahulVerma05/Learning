@@ -45,3 +45,5 @@
 1. Python string quetions
 ### Day 17
 1. gold badge in SQL Hackkerank
+### Day 18
+1. Leetcode started for SQL
