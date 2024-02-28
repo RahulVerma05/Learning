@@ -43,3 +43,5 @@
 1. Learn using case statment in sql
 ### Day 16
 1. Python string quetions
+### Day 17
+1. gold badge in SQL Hackkerank
