@@ -47,3 +47,5 @@
 1. gold badge in SQL Hackkerank
 ### Day 18
 1. Leetcode started for SQL
+### Day 19
+1. Trying to take participate in coding ninja contast :(
