@@ -49,3 +49,5 @@
 1. Leetcode started for SQL
 ### Day 19
 1. Trying to take participate in coding ninja contast :(
+### Day 20
+1. study some project related to python
