@@ -51,3 +51,6 @@
 1. Trying to take participate in coding ninja contast :(
 ### Day 20
 1. study some project related to python
+### Day 21 
+1. Array cotanst from coding ninja
+2. leetcode and hackerrank questions
