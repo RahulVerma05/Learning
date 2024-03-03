@@ -54,3 +54,6 @@
 ### Day 21 
 1. Array cotanst from coding ninja
 2. leetcode and hackerrank questions
+### Day 22
+1. SQL quetions
+
