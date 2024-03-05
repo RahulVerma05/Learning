@@ -56,4 +56,5 @@
 2. leetcode and hackerrank questions
 ### Day 22
 1. SQL quetions
-
+### Day 23
+1. Pyhton , SQL question solve
