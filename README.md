@@ -58,3 +58,6 @@
 1. SQL quetions
 ### Day 23
 1. Pyhton , SQL question solve
+### Day 24
+1. Starting my python project
+
