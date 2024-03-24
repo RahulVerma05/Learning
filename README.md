@@ -61,3 +61,4 @@
 ### Day 24
 1. Starting my python project
 
+Start updating resume
