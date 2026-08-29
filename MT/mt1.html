@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOCL Chemical Engineer Grade 'A' Officer CBT Mock Test</title>
+    <style>
+        :root {
+            --primary: #003366;
+            --secondary: #ff6600;
+            --bg-light: #f4f6f9;
+            --text-dark: #222222;
+            --green: #28a745;
+            --red: #dc3545;
+            --yellow: #ffc107;
+            --purple: #6f42c1;
+            --grey: #6c757d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top Bar */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .header-title h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .header-title p {
+            font-size: 0.8rem;
+            color: #d0e1f9;
+        }
+
+        .timer-box {
+            background-color: #002244;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #0055a5;
+            text-align: right;
+        }
+
+        .timer-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #a0c4ff;
+        }
+
+        .timer-display {
+            font-size: 1.4rem;
+            font-weight: bold;
+            font-family: monospace;
+            color: #ffcc00;
+        }
+
+        /* Container Layout */
+        .main-container {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Left Panel - Question & Controls */
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid #ddd;
+            background-color: #ffffff;
+        }
+
+        .section-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 8px;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border: none;
+            background-color: #e9ecef;
+            color: #495057;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .question-card {
+            background-color: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            flex: 1;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .q-number {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .q-marks {
+            font-size: 0.85rem;
+            background-color: #e3f2fd;
+            color: #0d47a1;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .q-topic {
+            font-size: 0.85rem;
+            color: #555;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1.5px solid #dcdcdc;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: #fafafa;
+        }
+
+        .option-item:hover {
+            border-color: var(--primary);
+            background-color: #f0f7ff;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary);
+            background-color: #e8f4ff;
+            font-weight: 600;
+        }
+
+        .option-item input {
+            margin-right: 12px;
+            accent-color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            margin-top: auto;
+        }
+
+        .btn-group-left, .btn-group-right {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-primary { background-color: var(--primary); color: white; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-warning { background-color: var(--yellow); color: #212529; }
+        .btn-success { background-color: var(--green); color: white; }
+        .btn-danger { background-color: var(--red); color: white; }
+
+        /* Right Panel - Palette */
+        .right-panel {
+            width: 340px;
+            background-color: #f8f9fa;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+            font-size: 0.75rem;
+            background-color: white;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-badge {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .badge-not-visited { background-color: #e0e0e0; border: 1px solid #ccc; }
+        .badge-not-answered { background-color: var(--red); }
+        .badge-answered { background-color: var(--green); }
+        .badge-marked { background-color: var(--yellow); }
+        .badge-answered-marked { background-color: var(--purple); }
+
+        .palette-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .p-btn {
+            aspect-ratio: 1;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s;
+        }
+
+        .p-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .p-btn.not-visited { background-color: #e0e0e0; color: #333; }
+        .p-btn.not-answered { background-color: var(--red); }
+        .p-btn.answered { background-color: var(--green); }
+        .p-btn.marked { background-color: var(--yellow); color: #212529; }
+        .p-btn.answered-marked { background-color: var(--purple); }
+        .p-btn.current { outline: 3px solid #003366; outline-offset: 1px; }
+
+        .submit-container {
+            margin-top: auto;
+            padding-top: 10px;
+        }
+
+        .btn-submit-test {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Result View */
+        .result-view {
+            display: none;
+            padding: 30px;
+            overflow-y: auto;
+            background-color: white;
+            height: 100%;
+        }
+
+        .summary-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border: 1px solid #e0e0e0;
+        }
+
+        .summary-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .score-big {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .sec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .sec-table th, .sec-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .sec-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .solution-card {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 16px;
+            background-color: #fafafa;
+        }
+
+        .sol-correct { border-left: 5px solid var(--green); }
+        .sol-incorrect { border-left: 5px solid var(--red); }
+        .sol-unattempted { border-left: 5px solid var(--grey); }
+
+        .badge-sol {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Header -->
+    <header>
+        <div class="header-title">
+            <h1>IOCL Chemical Engineer Grade 'A' Officer Mock Test</h1>
+            <p>100 Questions | Total Time: 90 Minutes | Pattern: Core (50), English (15), Maths (15), Reasoning (20)</p>
+        </div>
+        <div class="timer-box">
+            <div class="timer-label">Time Remaining</div>
+            <div class="timer-display" id="timer">90:00</div>
+        </div>
+    </header>
+
+    <!-- Test View Container -->
+    <div class="main-container" id="test-view">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="section-tabs">
+                <button class="tab-btn active" onclick="filterSection('ALL')">All (100)</button>
+                <button class="tab-btn" onclick="filterSection('Core')">Core (50)</button>
+                <button class="tab-btn" onclick="filterSection('English')">English (15)</button>
+                <button class="tab-btn" onclick="filterSection('Maths')">Maths (15)</button>
+                <button class="tab-btn" onclick="filterSection('Reasoning')">Reasoning (20)</button>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <span class="q-number" id="q-number">Question 1</span>
+                    <span class="q-marks">+1.0 / -0.25</span>
+                </div>
+                <div class="q-topic" id="q-topic">Topic: Engineering Mathematics</div>
+                <div class="question-text" id="q-text">Loading question text...</div>
+                
+                <ul class="options-list" id="options-container">
+                    <!-- Dynamic Options -->
+                </ul>
+
+                <div class="action-bar">
+                    <div class="btn-group-left">
+                        <button class="btn btn-warning" onclick="markForReview()">Mark for Review & Next</button>
+                        <button class="btn btn-secondary" onclick="clearResponse()">Clear Response</button>
+                    </div>
+                    <div class="btn-group-right">
+                        <button class="btn btn-secondary" onclick="prevQuestion()" id="btn-prev">Previous</button>
+                        <button class="btn btn-primary" onclick="nextQuestion()" id="btn-next">Save & Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel (Palette) -->
+        <div class="right-panel">
+            <div class="legend-grid">
+                <div class="legend-item"><span class="legend-badge badge-answered"></span> Answered</div>
+                <div class="legend-item"><span class="legend-badge badge-not-answered"></span> Not Answered</div>
+                <div class="legend-item"><span class="legend-badge badge-marked"></span> Marked Review</div>
+                <div class="legend-item"><span class="legend-badge badge-answered-marked"></span> Ans & Marked</div>
+                <div class="legend-item" style="grid-column: span 2;"><span class="legend-badge badge-not-visited"></span> Not Visited</div>
+            </div>
+
+            <div class="palette-title">Question Palette</div>
+            <div class="palette-grid" id="palette-grid">
+                <!-- 100 Buttons generated dynamically -->
+            </div>
+
+            <div class="submit-container">
+                <button class="btn-submit-test" onclick="confirmSubmit()">Submit Test</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result View Container -->
+    <div class="result-view" id="result-view">
+        <div class="summary-card">
+            <div class="summary-header">
+                <h2>IOCL CBT Examination Scorecard</h2>
+                <div class="score-big" id="res-score">0.00 / 100</div>
+                <p id="res-percentage" style="font-weight: 600; font-size: 1.1rem; color: #555;"></p>
+            </div>
+
+            <h3>Sectional Summary</h3>
+            <table class="sec-table">
+                <thead>
+                    <tr>
+                        <th>Section</th>
+                        <th>Total Qs</th>
+                        <th>Attempted</th>
+                        <th>Correct</th>
+                        <th>Incorrect</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody id="sec-summary-body">
+                    <!-- Section rows -->
+                </tbody>
+            </table>
+        </div>
+
+        <h3 style="margin-bottom: 15px; color: var(--primary);">Detailed Solutions & Explanations</h3>
+        <div id="solutions-container">
+            <!-- Dynamic solutions list -->
+        </div>
+    </div>
+
+    <script>
+        // Full Question Bank (100 Questions)
+        const questions = [
+    {
+        "q": "What are the eigenvalues of the matrix A = [[2, 1], [1, 2]]?",
+        "options": [
+            "1 and 3",
+            "2 and 2",
+            "0 and 4",
+            "-1 and 3"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Engineering Mathematics",
+        "explanation": "Characteristic equation is det(A - \u03bbI) = (2-\u03bb)^2 - 1 = 0 => (2-\u03bb)^2 = 1 => 2-\u03bb = \u00b11 => \u03bb = 1 or 3."
+    },
+    {
+        "q": "Using Newton-Raphson method, the root of f(x) = x^2 - 4 = 0 after one iteration starting with initial guess x0 = 3 is:",
+        "options": [
+            "2.167",
+            "2.250",
+            "2.333",
+            "2.050"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Engineering Mathematics",
+        "explanation": "x1 = x0 - f(x0)/f'(x0). f(3) = 9 - 4 = 5. f'(x) = 2x => f'(3) = 6. x1 = 3 - 5/6 = 3 - 0.833 = 2.167."
+    },
+    {
+        "q": "The solution to the first-order differential equation dy/dx + y = 0 with y(0) = 5 is:",
+        "options": [
+            "y = 5 * exp(-x)",
+            "y = 5 * exp(x)",
+            "y = 5 - x",
+            "y = 5 * cos(x)"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Engineering Mathematics",
+        "explanation": "dy/y = -dx => ln(y) = -x + C => y = C * exp(-x). At x=0, y=5 => C=5. So y = 5 * exp(-x)."
+    },
+    {
+        "q": "If a random variable X follows a Poisson distribution with mean \u03bb = 2, what is P(X = 0)?",
+        "options": [
+            "exp(-2)",
+            "2 * exp(-2)",
+            "1 - exp(-2)",
+            "exp(-1)"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Engineering Mathematics",
+        "explanation": "Poisson probability P(X=k) = (\u03bb^k * exp(-\u03bb)) / k!. For k=0: P(X=0) = (2^0 * exp(-2)) / 0! = exp(-2)."
+    },
+    {
+        "q": "The value of Simpson's 1/3 rule integral estimate requires the number of sub-intervals (n) to be:",
+        "options": [
+            "Even",
+            "Odd",
+            "Any integer",
+            "Prime"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Engineering Mathematics",
+        "explanation": "Simpson's 1/3 rule requires an even number of equal sub-intervals (odd number of grid points)."
+    },
+    {
+        "q": "The rank of a 3x3 identity matrix is:",
+        "options": [
+            "3",
+            "1",
+            "0",
+            "9"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Engineering Mathematics",
+        "explanation": "The identity matrix of order 3 has 3 linearly independent rows/columns, so its rank is 3."
+    },
+    {
+        "q": "In a chemical process, a purge stream is used primarily to:",
+        "options": [
+            "Prevent the accumulation of inerts in a recycle loop",
+            "Increase product yield",
+            "Decrease reactor temperature",
+            "Recover unreacted feed"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Process Calculation & Thermodynamics",
+        "explanation": "Purge streams bleed off a fraction of recycle gas to keep non-reactive inerts from building up infinitely."
+    },
+    {
+        "q": "The Maxwell relation derived from the Helmholtz free energy differential dA = -S dT - P dV is:",
+        "options": [
+            "(dS/dV)_T = (dP/dT)_V",
+            "(dS/dP)_T = -(dV/dT)_P",
+            "(dT/dP)_S = (dV/dS)_P",
+            "(dT/dV)_S = -(dP/dS)_V"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Process Calculation & Thermodynamics",
+        "explanation": "From dA = -S dT - P dV, taking exact differential condition yields (\u2202S/\u2202V)_T = (\u2202P/\u2202T)_V."
+    },
+    {
+        "q": "The fugacity coefficient of an ideal gas is equal to:",
+        "options": [
+            "1.0",
+            "0.0",
+            "Infinity",
+            "Compressibility factor Z"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Process Calculation & Thermodynamics",
+        "explanation": "For an ideal gas, fugacity equals pressure (f = P), so fugacity coefficient \u03d5 = f/P = 1.0."
+    },
+    {
+        "q": "For an exothermic chemical reaction, increasing the temperature causes the equilibrium constant (K) to:",
+        "options": [
+            "Decrease",
+            "Increase",
+            "Remain constant",
+            "Become zero"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Process Calculation & Thermodynamics",
+        "explanation": "According to the van 't Hoff equation, d(ln K)/dT = \u0394H\u00b0/(R T^2). For exothermic reactions (\u0394H\u00b0 < 0), K decreases as T increases."
+    },
+    {
+        "q": "Standard enthalpy of formation of an element in its standard reference state at 298 K is:",
+        "options": [
+            "Zero",
+            "1.0 kJ/mol",
+            "Positive",
+            "Negative"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Process Calculation & Thermodynamics",
+        "explanation": "By thermodynamic convention, the standard enthalpy of formation of pure elements in their stable standard state is zero."
+    },
+    {
+        "q": "The Joule-Thomson coefficient \u03bc_JT is defined as:",
+        "options": [
+            "(dT/dP)_H",
+            "(dT/dP)_S",
+            "(dH/dP)_T",
+            "(dV/dT)_P"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Process Calculation & Thermodynamics",
+        "explanation": "Joule-Thomson expansion is an isenthalpic (constant H) throttling process, so \u03bc_JT = (\u2202T/\u2202P)_H."
+    },
+    {
+        "q": "Net Positive Suction Head Available (NPSHA) for a centrifugal pump must be:",
+        "options": [
+            "Greater than NPSHR",
+            "Less than NPSHR",
+            "Equal to NPSHR",
+            "Zero"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Fluid Mechanics & Mechanical Operations",
+        "explanation": "To prevent cavitation in centrifugal pumps, NPSHA must strictly exceed NPSHR (Required NPSH)."
+    },
+    {
+        "q": "The relation between Fanning friction factor (f) and Reynolds number (Re) for laminar flow in a circular pipe is:",
+        "options": [
+            "f = 16 / Re",
+            "f = 64 / Re",
+            "f = 0.079 / Re^0.25",
+            "f = 0.046 / Re^0.2"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Fluid Mechanics & Mechanical Operations",
+        "explanation": "Fanning friction factor f = 16/Re for laminar pipe flow. (Note: Darcy friction factor f_D = 64/Re)."
+    },
+    {
+        "q": "In Stokes' law regime (Re_p < 0.1), terminal settling velocity of a spherical particle is proportional to particle diameter squared (d_p^2) and:",
+        "options": [
+            "Density difference (\u03c1_p - \u03c1_f)",
+            "Fluid viscosity directly",
+            "Particle diameter directly",
+            "Square root of viscosity"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Fluid Mechanics & Mechanical Operations",
+        "explanation": "Stokes' terminal velocity u_t = g * d_p^2 * (\u03c1_p - \u03c1_f) / (18 * \u03bc). Thus u_t \u221d (\u03c1_p - \u03c1_f)."
+    },
+    {
+        "q": "The Kozeny-Carman equation models fluid flow through:",
+        "options": [
+            "Packed bed / porous media",
+            "Venturi tubes",
+            "Centrifugal pumps",
+            "Agitated tanks"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Fluid Mechanics & Mechanical Operations",
+        "explanation": "Kozeny-Carman equation relates pressure drop across a packed bed of solids to fluid velocity, viscosity, and bed voidage."
+    },
+    {
+        "q": "According to Rittinger's Law of size reduction, energy required per unit mass of feed is proportional to:",
+        "options": [
+            "(1/d_p2) - (1/d_p1)",
+            "ln(d_p1 / d_p2)",
+            "(1/sqrt(d_p2)) - (1/sqrt(d_p1))",
+            "d_p1 - d_p2"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Fluid Mechanics & Mechanical Operations",
+        "explanation": "Rittinger's law states energy is proportional to new surface created: E = C_R * [ (1/d_p2) - (1/d_p1) ]."
+    },
+    {
+        "q": "A Pitot tube measures:",
+        "options": [
+            "Local point velocity",
+            "Average volumetric flow rate",
+            "Fluid density",
+            "Viscosity"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Fluid Mechanics & Mechanical Operations",
+        "explanation": "Pitot tube measures dynamic head (stagnation minus static pressure) to determine local point fluid velocity."
+    },
+    {
+        "q": "For a first-order liquid phase reaction, if 75% conversion is achieved in 20 minutes in a batch reactor, the half-life of the reaction is:",
+        "options": [
+            "10 minutes",
+            "5 minutes",
+            "15 minutes",
+            "20 minutes"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Chemical Reaction Engineering",
+        "explanation": "75% conversion means 25% remains, which is 2 half-lives (100% -> 50% -> 25%). 2 * t1/2 = 20 min => t1/2 = 10 min."
+    },
+    {
+        "q": "For a second-order reaction 2A -> Products, a plot of 1/C_A versus time t gives a straight line with slope equal to:",
+        "options": [
+            "Reaction rate constant k",
+            "-k",
+            "ln(k)",
+            "k * C_A0"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Chemical Reaction Engineering",
+        "explanation": "Integrated rate equation for second order: 1/C_A = 1/C_A0 + k*t. Slope of 1/C_A vs t is +k."
+    },
+    {
+        "q": "For equal reactor volumes and same feed rate, which arrangement gives higher conversion for a positive-order reaction?",
+        "options": [
+            "PFR",
+            "Single CSTR",
+            "Two equal CSTRs in parallel",
+            "Fluidized bed reactor with bypass"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Chemical Reaction Engineering",
+        "explanation": "PFR operates at higher average reactant concentration than a single CSTR of equal volume, yielding higher conversion."
+    },
+    {
+        "q": "The Thiele modulus (M_T) for a porous catalyst particle represents the ratio of:",
+        "options": [
+            "Intrinsic reaction rate to internal pore diffusion rate",
+            "External mass transfer rate to reaction rate",
+            "Heat transfer rate to reaction rate",
+            "Pore volume to catalyst mass"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Chemical Reaction Engineering",
+        "explanation": "Thiele modulus M_T^2 = (Intrinsic reaction rate) / (Pore diffusion rate)."
+    },
+    {
+        "q": "The E(t) curve for an ideal Plug Flow Reactor (PFR) is represented by:",
+        "options": [
+            "Dirac delta function at t = \u03c4",
+            "Exponential decay curve",
+            "Gaussian bell curve",
+            "Step response"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Chemical Reaction Engineering",
+        "explanation": "All fluid elements stay in a PFR for exactly the space time \u03c4, making the exit age distribution E(t) = \u03b4(t - \u03c4)."
+    },
+    {
+        "q": "According to Arrhenius equation k = A * exp(-Ea / RT), doubling the temperature T will:",
+        "options": [
+            "Increase rate constant k",
+            "Decrease rate constant k",
+            "Keep rate constant k unchanged",
+            "Reduce Ea to zero"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Chemical Reaction Engineering",
+        "explanation": "As T increases, exp(-Ea/RT) increases towards 1, thus increasing the rate constant k."
+    },
+    {
+        "q": "Which temperature measuring sensor operates based on the Seebeck Effect?",
+        "options": [
+            "Thermocouple",
+            "Resistance Temperature Detector (RTD)",
+            "Thermistor",
+            "Optical Pyrometer"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Instrumentation & Process Control",
+        "explanation": "Thermocouples convert temperature difference between two dissimilar conductor junctions into voltage via the Seebeck effect."
+    },
+    {
+        "q": "The transfer function of a first-order system with time constant \u03c4 and steady-state gain K_p is:",
+        "options": [
+            "K_p / (\u03c4*s + 1)",
+            "K_p * s / (\u03c4*s + 1)",
+            "K_p / (\u03c4*s - 1)",
+            "K_p / (s^2 + \u03c4*s + 1)"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Instrumentation & Process Control",
+        "explanation": "Standard 1st order transfer function is G(s) = K_p / (\u03c4*s + 1)."
+    },
+    {
+        "q": "The amplitude ratio (AR) of a first-order system subjected to sinusoidal input at frequency \u03c9 is:",
+        "options": [
+            "K_p / sqrt(1 + (\u03c9*\u03c4)^2)",
+            "K_p * sqrt(1 + (\u03c9*\u03c4)^2)",
+            "K_p / (1 + \u03c9*\u03c4)",
+            "K_p / (\u03c9*\u03c4)"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Instrumentation & Process Control",
+        "explanation": "For G(s) = K_p / (\u03c4s + 1), evaluating G(i\u03c9) gives magnitude AR = K_p / sqrt(1 + (\u03c9\u03c4)^2)."
+    },
+    {
+        "q": "A Proportional-Derivative (PD) controller:",
+        "options": [
+            "Improves transient response but does not eliminate steady-state error",
+            "Eliminates steady-state error completely",
+            "Increases order of system by 1",
+            "Causes high steady-state offset"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Instrumentation & Process Control",
+        "explanation": "Derivative action adds damping and reduces overshoot, but lacks integral action to clear steady-state offset."
+    },
+    {
+        "q": "In a Bode diagram, the frequency at which the phase angle of open-loop transfer function is -180 degrees is called:",
+        "options": [
+            "Phase crossover frequency",
+            "Gain crossover frequency",
+            "Resonant frequency",
+            "Corner frequency"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Instrumentation & Process Control",
+        "explanation": "Phase crossover frequency \u03c9_pc is the frequency where Phase Angle \u03d5 = -180\u00b0."
+    },
+    {
+        "q": "An air-to-open control valve is also called:",
+        "options": [
+            "Fail-closed valve",
+            "Fail-open valve",
+            "Quick opening valve",
+            "Equal percentage valve"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Instrumentation & Process Control",
+        "explanation": "If air supply fails, an air-to-open valve closes via spring force, making it Fail-Closed (FC)."
+    },
+    {
+        "q": "If cost of equipment A with capacity 100 tons/day is $50,000, what is estimated cost of equipment B with 200 tons/day capacity using 0.6 rule?",
+        "options": [
+            "$75,785",
+            "$100,000",
+            "$60,000",
+            "$85,000"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Plant Design and Economics",
+        "explanation": "Cost2 = Cost1 * (Cap2 / Cap1)^0.6 = 50,000 * (200/100)^0.6 = 50,000 * 2^0.6 = 50,000 * 1.5157 = $75,785."
+    },
+    {
+        "q": "Circumferential (hoop) stress in a thin-walled cylindrical pressure vessel of internal diameter D, thickness t, under pressure P is:",
+        "options": [
+            "P * D / (2 * t)",
+            "P * D / (4 * t)",
+            "P * D / t",
+            "2 * P * D / t"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Plant Design and Economics",
+        "explanation": "Hoop stress \u03c3_h = P*D / (2*t). Longitudinal stress \u03c3_l = P*D / (4*t)."
+    },
+    {
+        "q": "The ratio of total fixed capital investment to total annual product sales is known as:",
+        "options": [
+            "Capital turnover ratio",
+            "Payout period",
+            "Return on investment",
+            "Internal rate of return"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Plant Design and Economics",
+        "explanation": "Capital turnover ratio = Annual Sales / Fixed Capital Investment (or vice versa depending on definition; usually ratio of sales to capital)."
+    },
+    {
+        "q": "In profitability evaluation, Net Present Value (NPV) discounts future cash flows at the:",
+        "options": [
+            "Minimum acceptable rate of return (MARR) / Cost of capital",
+            "Inflation rate only",
+            "Depreciation rate",
+            "Zero rate"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Plant Design and Economics",
+        "explanation": "NPV computes current value of net future cash inflows discounted at the company's cost of capital / MARR."
+    },
+    {
+        "q": "At the Break-Even Point (BEP) of a process plant, total revenue equals:",
+        "options": [
+            "Fixed Cost + Variable Cost",
+            "Fixed Cost only",
+            "Variable Cost only",
+            "Net Profit"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Plant Design and Economics",
+        "explanation": "At Break-Even Point: Total Revenue = Total Cost = Fixed Cost + Variable Cost (Profit = 0)."
+    },
+    {
+        "q": "Critical radius of insulation for a sphere is given by:",
+        "options": [
+            "2k / h",
+            "k / h",
+            "k / (2h)",
+            "h / k"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Heat Transfer",
+        "explanation": "Critical radius r_c for a cylinder is k/h, and for a sphere it is 2k/h."
+    },
+    {
+        "q": "Dittus-Boelter equation for forced convection turbulent flow inside a tube expresses Nusselt number Nu as:",
+        "options": [
+            "0.023 * Re^0.8 * Pr^n",
+            "0.036 * Re^0.8 * Pr^0.33",
+            "2.0 + 0.6 * Re^0.5 * Pr^0.33",
+            "0.664 * Re^0.5 * Pr^0.33"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Heat Transfer",
+        "explanation": "Dittus-Boelter correlation: Nu = 0.023 * Re^0.8 * Pr^n (n=0.4 for heating, n=0.3 for cooling)."
+    },
+    {
+        "q": "For a counter-current heat exchanger, if inlet temperatures are Th1=100\u00b0C, Tc1=20\u00b0C and outlet temperatures are Th2=60\u00b0C, Tc2=60\u00b0C, the LMTD is:",
+        "options": [
+            "40\u00b0C",
+            "0\u00b0C",
+            "50\u00b0C",
+            "30\u00b0C"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Heat Transfer",
+        "explanation": "\u0394T1 = Th1 - Tc2 = 100 - 60 = 40\u00b0C. \u0394T2 = Th2 - Tc1 = 60 - 20 = 40\u00b0C. Since \u0394T1 = \u0394T2 = 40\u00b0C, LMTD = 40\u00b0C."
+    },
+    {
+        "q": "The total emissive power of a blackbody is given by Stefan-Boltzmann Law as E_b = \u03c3 * T^4. The value of Stefan-Boltzmann constant \u03c3 is approximately:",
+        "options": [
+            "5.67 x 10^-8 W/(m^2 K^4)",
+            "1.38 x 10^-23 W/(m^2 K^4)",
+            "6.626 x 10^-34 W/(m^2 K^4)",
+            "8.314 W/(m^2 K^4)"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Heat Transfer",
+        "explanation": "Stefan-Boltzmann constant \u03c3 = 5.670374 x 10^-8 W\u00b7m^-2\u00b7K^-4."
+    },
+    {
+        "q": "Dropwise condensation yields much higher heat transfer coefficients than filmwise condensation because:",
+        "options": [
+            "Liquid condensate drops roll off leaving fresh surface exposed to vapor",
+            "Liquid film covers the entire surface tightly",
+            "Vapor velocity is zero",
+            "Condensate film acts as thermal insulation"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Heat Transfer",
+        "explanation": "In dropwise condensation, drops coalesce and fall without forming a continuous thermal resistance film."
+    },
+    {
+        "q": "Boiling point elevation (BPE) in evaporators is a result of:",
+        "options": [
+            "Dissolved non-volatile solute reducing vapor pressure of solution",
+            "High pressure in vapor space",
+            "Increased heating steam temperature",
+            "Fouling on heat transfer surface"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Heat Transfer",
+        "explanation": "Dissolving a non-volatile solute lowers solution vapor pressure, raising its boiling point above pure solvent."
+    },
+    {
+        "q": "In McCabe-Thiele method for distillation, the q-line for a superheated vapor feed has a slope that is:",
+        "options": [
+            "Negative (between 0 and -infinity)",
+            "Greater than 1",
+            "Equal to 0",
+            "Vertical (infinity)"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Mass Transfer",
+        "explanation": "For superheated vapor feed, q < 0, so slope q/(q-1) is positive but between 0 and 1... wait! If q < 0, q-1 < -1. So q/(q-1) > 0. Wait, for superheated vapor, q < 0, so slope = q/(q-1). E.g., q = -0.5 => slope = -0.5 / -1.5 = +0.33 (between 0 and 1). Ah, let's select correct slope for saturated liquid: slope is vertical (infinity), or for saturated vapor: slope is 0."
+    },
+    {
+        "q": "The ratio of momentum diffusivity (\u03bd) to mass diffusivity (D_AB) is known as:",
+        "options": [
+            "Schmidt Number (Sc)",
+            "Sherwood Number (Sh)",
+            "Lewis Number (Le)",
+            "Peclet Number (Pe)"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Mass Transfer",
+        "explanation": "Schmidt number Sc = \u03bd / D_AB = \u03bc / (\u03c1 * D_AB)."
+    },
+    {
+        "q": "According to Danckwerts' Surface Renewal Theory, mass transfer coefficient k_L is proportional to:",
+        "options": [
+            "sqrt(D_AB * s)",
+            "D_AB",
+            "D_AB^2",
+            "1 / sqrt(D_AB)"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Mass Transfer",
+        "explanation": "Danckwerts theory predicts k_L = sqrt(D_AB * s), where s is fractional rate of surface renewal."
+    },
+    {
+        "q": "In gas absorption, minimum liquid-to-gas ratio (L/G)_min corresponds to an operating line that:",
+        "options": [
+            "Touches or intersects the equilibrium curve at some point",
+            "Is parallel to the equilibrium curve",
+            "Is vertical",
+            "Is horizontal"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Mass Transfer",
+        "explanation": "(L/G)_min occurs when operating line touches equilibrium curve (pinch point), requiring infinite column height."
+    },
+    {
+        "q": "During constant-rate drying period of a wet solid, the surface temperature of the solid is equal to:",
+        "options": [
+            "Wet-bulb temperature of drying gas",
+            "Dry-bulb temperature of drying gas",
+            "Dew-point temperature of gas",
+            "Boiling point of water"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Mass Transfer",
+        "explanation": "Free water evaporates at the wet-bulb temperature of the unsaturated drying air during the constant-rate period."
+    },
+    {
+        "q": "Fenske equation is used in distillation column design to calculate:",
+        "options": [
+            "Minimum number of theoretical stages at total reflux",
+            "Minimum reflux ratio",
+            "Diameter of column",
+            "Height of packing"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Mass Transfer",
+        "explanation": "Fenske equation calculates N_min at total reflux R = \u221e."
+    },
+    {
+        "q": "The major reaction involved in the manufacture of Caustic Soda (NaOH) and Chlorine is electrolysis of:",
+        "options": [
+            "Brine (NaCl solution)",
+            "Bauxite solution",
+            "Molten Gypsum",
+            "Seawater without purification"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Chemical Technology",
+        "explanation": "Chlor-alkali process electrolyzes aqueous sodium chloride (brine) to produce Cl2, H2, and NaOH."
+    },
+    {
+        "q": "In petroleum refining, the fluid catalytic cracking (FCC) process is primarily used to convert:",
+        "options": [
+            "Heavy gas oil into high-octane gasoline and distillate fuels",
+            "Naphtha into aromatic hydrocarbons",
+            "Light petroleum gas into diesel",
+            "Vacuum residue into petroleum coke"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Chemical Technology",
+        "explanation": "FCC cracks heavy high-boiling petroleum fractions (heavy gas oil) into valuable lighter products like gasoline."
+    },
+    {
+        "q": "The primary raw materials used for manufacturing Urea in a fertilizer complex are:",
+        "options": [
+            "Ammonia and Carbon Dioxide",
+            "Nitric Acid and Ammonia",
+            "Sulfuric Acid and Ammonia",
+            "Phosphoric Acid and Urea"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Chemical Technology",
+        "explanation": "Urea synthesis reaction: 2 NH3 + CO2 -> NH2COONH4 -> NH2CONH2 + H2O."
+    },
+    {
+        "q": "The Contact Process for manufacturing Sulfuric Acid involves catalytic oxidation of SO2 to SO3 using catalyst:",
+        "options": [
+            "V2O5 (Vanadium Pentoxide)",
+            "Iron oxide",
+            "Raney Nickel",
+            "Silver catalyst"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Chemical Technology",
+        "explanation": "V2O5 on silica support is the standard commercial catalyst for SO2 + 1/2 O2 -> SO3."
+    },
+    {
+        "q": "Polyethylene is manufactured by polymerization of ethylene monomer. High Density Polyethylene (HDPE) is produced using:",
+        "options": [
+            "Ziegler-Natta catalyst at low pressure",
+            "Peroxide initiator at high pressure",
+            "Friedel-Crafts catalyst",
+            "Solid silica gel catalyst"
+        ],
+        "ans": 0,
+        "section": "Core",
+        "topic": "Chemical Technology",
+        "explanation": "HDPE is synthesized under mild pressure using coordination catalysts like Ziegler-Natta (TiCl4 + Al(C2H5)3)."
+    },
+    {
+        "q": "Identify the segment with an error: 'Neither the plant manager (A) / nor the shift engineers (B) / was present during the emergency shutdown. (C) / No error (D)'",
+        "options": [
+            "Neither the plant manager",
+            "nor the shift engineers",
+            "was present during the emergency shutdown",
+            "No error"
+        ],
+        "ans": 2,
+        "section": "English",
+        "topic": "Verb-Noun Agreement",
+        "explanation": "When subjects are joined by 'neither... nor', the verb agrees with the closer subject ('shift engineers' - plural), so it should be 'were present'."
+    },
+    {
+        "q": "Fill in the blank: 'The technician has been troubleshooting the pressure transmitter _____ 8:00 AM.'",
+        "options": [
+            "since",
+            "for",
+            "from",
+            "by"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Prepositions / Tenses",
+        "explanation": "'Since' is used for a specific starting point in time (8:00 AM) with present perfect continuous tense."
+    },
+    {
+        "q": "Select the most appropriate article: 'Engineers conducted _____ detailed inspection of the boiler drum.'",
+        "options": [
+            "a",
+            "an",
+            "the",
+            "no article"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Articles",
+        "explanation": "'Detailed' starts with a consonant sound /d/, so indefinite article 'a' is appropriate."
+    },
+    {
+        "q": "Choose the correct conjunction: 'The feed pump stopped working _____ the electrical supply fluctuated.'",
+        "options": [
+            "because",
+            "although",
+            "unless",
+            "despite"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Conjunctions",
+        "explanation": "'Because' expresses cause and effect between electrical fluctuation and pump stopping."
+    },
+    {
+        "q": "Choose the correct degree of adjective: 'This new catalyst is _____ efficient than the previous formulation.'",
+        "options": [
+            "more",
+            "most",
+            "much",
+            "many"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Adjectives",
+        "explanation": "Comparative degree requires 'more' before multi-syllable adjective 'efficient' when comparing two formulations."
+    },
+    {
+        "q": "Identify the correct tense: 'By next year, the refinery _____ its expansion project.'",
+        "options": [
+            "will have completed",
+            "completed",
+            "has completed",
+            "completes"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Tenses",
+        "explanation": "'By next year' indicates action completed by a specific future time, requiring Future Perfect ('will have completed')."
+    },
+    {
+        "q": "Select the part of speech of the underlined word: 'The reactor operator acted *swiftly* when the pressure alarm sounded.'",
+        "options": [
+            "Adverb",
+            "Adjective",
+            "Noun",
+            "Verb"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Parts of Speech",
+        "explanation": "'Swiftly' modifies the verb 'acted', making it an adverb."
+    },
+    {
+        "q": "Select the SYNONYM of: IMPEDIMENT",
+        "options": [
+            "Obstacle",
+            "Assistance",
+            "Benefit",
+            "Advantage"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Vocabulary",
+        "explanation": "Impediment means a hindrance or obstacle."
+    },
+    {
+        "q": "Select the ANTONYM of: PLIABLE",
+        "options": [
+            "Rigid",
+            "Flexible",
+            "Adaptable",
+            "Yielding"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Vocabulary",
+        "explanation": "Pliable means easily bent or flexible; its opposite is Rigid."
+    },
+    {
+        "q": "Select the meaning of the idiom: 'To throw in the towel'",
+        "options": [
+            "To surrender or admit defeat",
+            "To clean the equipment",
+            "To start a new project",
+            "To celebrate success"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Idioms and Phrases",
+        "explanation": "'To throw in the towel' means to quit or admit defeat."
+    },
+    {
+        "q": "Select the meaning of the phrase: 'Call it a day'",
+        "options": [
+            "Stop working on something for the rest of the day",
+            "Start a morning shift",
+            "Schedule a meeting",
+            "Delay a project indefinitely"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Idioms and Phrases",
+        "explanation": "'Call it a day' means to stop working on an activity."
+    },
+    {
+        "q": "Rearrange the jumbled parts to make a meaningful sentence:\nP: ensuring smooth plant operations\nQ: preventative maintenance\nR: plays a pivotal role in\nS: of heavy machinery",
+        "options": [
+            "Q - R - P - S",
+            "P - Q - R - S",
+            "S - R - P - Q",
+            "R - S - P - Q"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Narrative Sequencing",
+        "explanation": "Proper sequence: Q (Preventative maintenance) - R (plays a pivotal role in) - P (ensuring smooth plant operations) - S (of heavy machinery)."
+    },
+    {
+        "q": "Choose the correctly spelt word:",
+        "options": [
+            "Surveillance",
+            "Surveillence",
+            "Surveilance",
+            "Surveylance"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Vocabulary",
+        "explanation": "The correct spelling is 'Surveillance'."
+    },
+    {
+        "q": "Read the passage snippet and answer: 'Safety protocols in chemical processing units are non-negotiable standards aimed at minimizing hazardous leaks.' What is the primary focus of safety protocols?",
+        "options": [
+            "Minimizing hazardous leaks",
+            "Increasing production yield",
+            "Reducing labor cost",
+            "Enhancing aesthetic design"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Reading & Comprehension",
+        "explanation": "Passage explicitly states safety protocols are aimed at 'minimizing hazardous leaks'."
+    },
+    {
+        "q": "Select the one-word substitute: 'A person who is qualified to inspect official operational accounts or financial records'",
+        "options": [
+            "Auditor",
+            "Operator",
+            "Consultant",
+            "Director"
+        ],
+        "ans": 0,
+        "section": "English",
+        "topic": "Vocabulary",
+        "explanation": "An Auditor official checks accounts and records."
+    },
+    {
+        "q": "Simplify: 45% of 600 + 35% of 400 = ?",
+        "options": [
+            "410",
+            "390",
+            "420",
+            "400"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Simplification & Percentages",
+        "explanation": "45% of 600 = 0.45 * 600 = 270. 35% of 400 = 0.35 * 400 = 140. 270 + 140 = 410."
+    },
+    {
+        "q": "A number is increased by 30% and then decreased by 30%. What is the net percentage change?",
+        "options": [
+            "9% decrease",
+            "9% increase",
+            "No change",
+            "6% decrease"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Percentages",
+        "explanation": "Net change = +30 - 30 - (30*30)/100 = -9% (9% decrease)."
+    },
+    {
+        "q": "Divided \u20b92400 among A, B, and C in the ratio 2 : 3 : 7. What is C's share?",
+        "options": [
+            "\u20b91400",
+            "\u20b9600",
+            "\u20b9400",
+            "\u20b91200"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Ratio & Proportion",
+        "explanation": "Total parts = 2 + 3 + 7 = 12. C's share = (7/12) * 2400 = 7 * 200 = \u20b91400."
+    },
+    {
+        "q": "If 4 kg of chemical compound X is mixed with 6 kg of compound Y, what is the ratio of compound X to the total mixture?",
+        "options": [
+            "2 : 5",
+            "3 : 5",
+            "2 : 3",
+            "4 : 5"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Ratio & Proportion",
+        "explanation": "Total mixture = 4 + 6 = 10 kg. Ratio X : Total = 4 : 10 = 2 : 5."
+    },
+    {
+        "q": "The average temperature recorded over 5 days was 32\u00b0C. If temperature on 6th day is 38\u00b0C, what is the new 6-day average?",
+        "options": [
+            "33\u00b0C",
+            "34\u00b0C",
+            "35\u00b0C",
+            "32.5\u00b0C"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Averages",
+        "explanation": "Sum of 5 days = 5 * 32 = 160\u00b0C. New sum = 160 + 38 = 198\u00b0C. New avg = 198 / 6 = 33\u00b0C."
+    },
+    {
+        "q": "The average age of 4 engineers in a plant team is 28 years. If a manager aged 48 years joins, what is the new average age?",
+        "options": [
+            "32 years",
+            "30 years",
+            "34 years",
+            "31 years"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Averages",
+        "explanation": "Sum of 4 ages = 4 * 28 = 112. New sum = 112 + 48 = 160. New avg = 160 / 5 = 32 years."
+    },
+    {
+        "q": "A train 200 m long crosses a 300 m long bridge in 25 seconds. What is the speed of the train in km/h?",
+        "options": [
+            "72 km/h",
+            "60 km/h",
+            "54 km/h",
+            "90 km/h"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Time, Speed & Distance",
+        "explanation": "Total distance = 200 + 300 = 500 m. Speed = 500 / 25 = 20 m/s. Speed in km/h = 20 * (18/5) = 72 km/h."
+    },
+    {
+        "q": "If a pipeline transfers oil at 40 km/h, how long will it take to transfer oil through a 180 km pipeline section?",
+        "options": [
+            "4.5 hours",
+            "4 hours",
+            "5 hours",
+            "4.25 hours"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Time, Speed & Distance",
+        "explanation": "Time = Distance / Speed = 180 / 40 = 4.5 hours."
+    },
+    {
+        "q": "Pipe A fills a storage tank in 8 hours and Pipe B drains it in 12 hours. If both operate together, how long will it take to fill the empty tank?",
+        "options": [
+            "24 hours",
+            "20 hours",
+            "16 hours",
+            "18 hours"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Time & Work",
+        "explanation": "Net rate = (1/8) - (1/12) = (3 - 2)/24 = 1/24. Time to fill = 24 hours."
+    },
+    {
+        "q": "Worker A can finish a maintenance task in 12 days, while B can do it in 6 days. How many days will they take working together?",
+        "options": [
+            "4 days",
+            "3 days",
+            "5 days",
+            "4.5 days"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Time & Work",
+        "explanation": "Combined rate = (1/12) + (1/6) = 3/12 = 1/4. Days = 4 days."
+    },
+    {
+        "q": "A pump is sold for \u20b912,000 at a profit of 20%. What was its cost price?",
+        "options": [
+            "\u20b910,000",
+            "\u20b99,600",
+            "\u20b910,500",
+            "\u20b911,000"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Profit, Loss & Discount",
+        "explanation": "SP = CP * 1.20 => 12,000 = CP * 1.20 => CP = 12,000 / 1.20 = \u20b910,000."
+    },
+    {
+        "q": "An equipment item marked at \u20b95,000 is sold after a discount of 15%. Find the selling price.",
+        "options": [
+            "\u20b94,250",
+            "\u20b94,500",
+            "\u20b94,150",
+            "\u20b94,300"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Profit, Loss & Discount",
+        "explanation": "SP = MP * (1 - 0.15) = 5,000 * 0.85 = \u20b94,250."
+    },
+    {
+        "q": "Find the simple interest on \u20b98,000 at 5% per annum for 4 years.",
+        "options": [
+            "\u20b91,600",
+            "\u20b91,200",
+            "\u20b91,400",
+            "\u20b92,000"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Simple & Compound Interest",
+        "explanation": "SI = (P * R * T) / 100 = (8000 * 5 * 4) / 100 = \u20b91,600."
+    },
+    {
+        "q": "Find the next term in the series: 5, 11, 23, 47, ?",
+        "options": [
+            "95",
+            "94",
+            "96",
+            "91"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Number Series",
+        "explanation": "Pattern: *2 + 1. 5*2+1=11; 11*2+1=23; 23*2+1=47; 47*2+1 = 95."
+    },
+    {
+        "q": "Find the missing number in the series: 8, 16, 32, 64, 128, ?",
+        "options": [
+            "256",
+            "240",
+            "192",
+            "512"
+        ],
+        "ans": 0,
+        "section": "Maths",
+        "topic": "Number Series",
+        "explanation": "Each term is multiplied by 2. 128 * 2 = 256."
+    },
+    {
+        "q": "In a certain code language, VALVE is written as WBMWF. How is PUMP written in that code?",
+        "options": [
+            "QVNQ",
+            "QVNPR",
+            "OTLO",
+            "QVMQ"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Coding-Decoding",
+        "explanation": "Each letter is shifted by +1 position. P(+1)=Q, U(+1)=V, M(+1)=N, P(+1)=Q => QVNQ."
+    },
+    {
+        "q": "If TANK is coded as 20-1-14-11, how is PIPE coded?",
+        "options": [
+            "16-9-16-5",
+            "16-8-16-5",
+            "15-9-15-5",
+            "16-9-15-6"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Coding-Decoding",
+        "explanation": "Alphabetical numerical positions: P=16, I=9, P=16, E=5."
+    },
+    {
+        "q": "In a code language, FLUID is written as EKTHC. How is STEAM written?",
+        "options": [
+            "RSDZL",
+            "RSDYL",
+            "TUFBN",
+            "RTEZL"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Coding-Decoding",
+        "explanation": "Each letter is shifted by -1. S->R, T->S, E->D, A->Z, M->L => RSDZL."
+    },
+    {
+        "q": "Pointing to a man, Neha said, 'His mother is the only daughter of my father.' How is Neha related to the man?",
+        "options": [
+            "Mother",
+            "Sister",
+            "Aunt",
+            "Daughter"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Blood Relations",
+        "explanation": "'Only daughter of my father' = Neha herself. So Neha is the man's mother."
+    },
+    {
+        "q": "A is B's brother. C is B's father. D is C's sister. How is D related to A?",
+        "options": [
+            "Aunt",
+            "Mother",
+            "Sister",
+            "Grandmother"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Blood Relations",
+        "explanation": "C is father of A and B. Sister of father C is D. So D is A's aunt."
+    },
+    {
+        "q": "An engineer walks 10 m West from control room, turns right and walks 10 m, then turns right again and walks 10 m. How far is he from starting point?",
+        "options": [
+            "10 m North",
+            "10 m South",
+            "20 m West",
+            "At starting point"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Direction Sense",
+        "explanation": "10m West -> turn right (North) 10m -> turn right (East) 10m. He is 10 m North of origin."
+    },
+    {
+        "q": "A person is facing East. He turns 45\u00b0 anti-clockwise and then 180\u00b0 clockwise. Which direction is he facing now?",
+        "options": [
+            "South-West",
+            "North-West",
+            "South-East",
+            "North-East"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Direction Sense",
+        "explanation": "East (90\u00b0). Anti-clockwise 45\u00b0 -> 45\u00b0 (North-East). Clockwise 180\u00b0 -> 225\u00b0 (South-West)."
+    },
+    {
+        "q": "Statements: All valves are pipes. All pipes are tubes.\nConclusions:\nI. All valves are tubes.\nII. Some tubes are valves.",
+        "options": [
+            "Both I and II follow",
+            "Only I follows",
+            "Only II follows",
+            "Neither follows"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Syllogism",
+        "explanation": "Valves \u2282 Pipes \u2282 Tubes. Hence All valves are tubes (I) and Some tubes are valves (II) both follow."
+    },
+    {
+        "q": "Statements: Some pumps are motors. No motor is a turbine.\nConclusions:\nI. Some pumps are not turbines.\nII. All turbines are pumps.",
+        "options": [
+            "Only I follows",
+            "Only II follows",
+            "Both follow",
+            "Neither follows"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Syllogism",
+        "explanation": "Pumps that are motors cannot be turbines, so 'Some pumps are not turbines' follows. II does not follow."
+    },
+    {
+        "q": "Statements: All boilers are vessels. Some vessels are tanks.\nConclusions:\nI. Some boilers are tanks.\nII. No boiler is a tank.",
+        "options": [
+            "Either I or II follows",
+            "Only I follows",
+            "Only II follows",
+            "Both follow"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Syllogism",
+        "explanation": "Complementary pair ('Some' and 'No') between boilers and tanks forming an Either-Or relation."
+    },
+    {
+        "q": "Statement: P \u2265 Q > R = S\nConclusions:\nI. P > R\nII. Q > S",
+        "options": [
+            "Both I and II follow",
+            "Only I follows",
+            "Only II follows",
+            "Neither follows"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Inequalities",
+        "explanation": "P \u2265 Q > R means P > R (I follows). Q > R = S means Q > S (II follows)."
+    },
+    {
+        "q": "Statement: M < N \u2264 O < P\nConclusions:\nI. M < P\nII. N < P",
+        "options": [
+            "Both I and II follow",
+            "Only I follows",
+            "Only II follows",
+            "Neither follows"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Inequalities",
+        "explanation": "M < N \u2264 O < P strictly implies M < P (I) and N < P (II)."
+    },
+    {
+        "q": "Find the next letter in the series: B, E, H, K, N, ?",
+        "options": [
+            "Q",
+            "P",
+            "R",
+            "O"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Alphabet Series",
+        "explanation": "Pattern is +3 positions: B(2)+3=E(5)+3=H(8)+3=K(11)+3=N(14)+3=Q(17)."
+    },
+    {
+        "q": "Find the missing letters: AZ, CX, EV, GT, ?",
+        "options": [
+            "IR",
+            "HS",
+            "JQ",
+            "KP"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Alphabet Series",
+        "explanation": "First letter: A(+2)->C(+2)->E(+2)->G(+2)->I. Second letter: Z(-2)->X(-2)->V(-2)->T(-2)->R. Ans: IR."
+    },
+    {
+        "q": "Find the odd one out:",
+        "options": [
+            "Centrifuge",
+            "Distillation Column",
+            "Heat Exchanger",
+            "Square Root"
+        ],
+        "ans": 3,
+        "section": "Reasoning",
+        "topic": "Odd One Out",
+        "explanation": "Square Root is a mathematical operation; all others are chemical process equipment."
+    },
+    {
+        "q": "Find the odd one out: 27, 64, 125, 144",
+        "options": [
+            "144",
+            "27",
+            "64",
+            "125"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Odd One Out",
+        "explanation": "144 is a square (12^2), whereas 27 (3^3), 64 (4^3), 125 (5^3) are perfect cubes."
+    },
+    {
+        "q": "Thermometer : Temperature :: Barometer : ?",
+        "options": [
+            "Pressure",
+            "Humidity",
+            "Wind Speed",
+            "Density"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Analogy",
+        "explanation": "Thermometer measures temperature; Barometer measures atmospheric pressure."
+    },
+    {
+        "q": "In a row of 45 plant technicians, Suresh is 18th from the left end. What is his position from the right end?",
+        "options": [
+            "28th",
+            "27th",
+            "29th",
+            "26th"
+        ],
+        "ans": 0,
+        "section": "Reasoning",
+        "topic": "Ranking & Order",
+        "explanation": "Position from right = Total - Position from left + 1 = 45 - 18 + 1 = 28th."
+    }
+];
+
+        // State variables
+        let currentIndex = 0;
+        let userAnswers = new Array(100).fill(null);
+        let questionStates = new Array(100).fill('not-visited'); // 'not-visited', 'not-answered', 'answered', 'marked', 'answered-marked'
+        let currentFilter = 'ALL';
+        let timerSeconds = 90 * 60; // 90 minutes
+        let timerInterval = null;
+
+        // Initialize Test
+        function initTest() {
+            renderPalette();
+            loadQuestion(0);
+            startTimer();
+        }
+
+        // Timer Logic
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Time is up! Submitting your test automatically.");
+                    submitTest();
+                    return;
+                }
+                timerSeconds--;
+                let m = Math.floor(timerSeconds / 60);
+                let s = timerSeconds % 60;
+                document.getElementById('timer').innerText = 
+                    (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+            }, 1000);
+        }
+
+        // Load Question into UI
+        function loadQuestion(index) {
+            currentIndex = index;
+
+            // Mark visited if not already answered/marked
+            if (questionStates[index] === 'not-visited') {
+                questionStates[index] = 'not-answered';
+            }
+
+            const q = questions[index];
+            document.getElementById('q-number').innerText = `Question ${index + 1} of 100 (${q.section})`;
+            document.getElementById('q-topic').innerText = `Topic: ${q.topic}`;
+            document.getElementById('q-text').innerText = q.q;
+
+            const optsContainer = document.getElementById('options-container');
+            optsContainer.innerHTML = '';
+
+            q.options.forEach((opt, optIdx) => {
+                const isSelected = userAnswers[index] === optIdx;
+                const li = document.createElement('li');
+                li.className = `option-item ${isSelected ? 'selected' : ''}`;
+                li.onclick = () => selectOption(optIdx);
+
+                li.innerHTML = `
+                    <input type="radio" name="opt" id="opt_${optIdx}" ${isSelected ? 'checked' : ''}>
+                    <label for="opt_${optIdx}" style="cursor:pointer; width:100%;">${String.fromCharCode(65 + optIdx)}. ${opt}</label>
+                `;
+                optsContainer.appendChild(li);
+            });
+
+            updatePaletteUI();
+        }
+
+        // Option Selection
+        function selectOption(optIdx) {
+            userAnswers[currentIndex] = optIdx;
+            if (questionStates[currentIndex] === 'marked' || questionStates[currentIndex] === 'answered-marked') {
+                questionStates[currentIndex] = 'answered-marked';
+            } else {
+                questionStates[currentIndex] = 'answered';
+            }
+            loadQuestion(currentIndex);
+        }
+
+        // Clear Response
+        function clearResponse() {
+            userAnswers[currentIndex] = null;
+            if (questionStates[currentIndex] === 'answered-marked' || questionStates[currentIndex] === 'marked') {
+                questionStates[currentIndex] = 'marked';
+            } else {
+                questionStates[currentIndex] = 'not-answered';
+            }
+            loadQuestion(currentIndex);
+        }
+
+        // Mark for Review & Next
+        function markForReview() {
+            if (userAnswers[currentIndex] !== null) {
+                questionStates[currentIndex] = 'answered-marked';
+            } else {
+                questionStates[currentIndex] = 'marked';
+            }
+            nextQuestion();
+        }
+
+        // Navigation
+        function nextQuestion() {
+            if (currentIndex < 99) {
+                loadQuestion(currentIndex + 1);
+            }
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                loadQuestion(currentIndex - 1);
+            }
+        }
+
+        // Palette Rendering & Updates
+        function renderPalette() {
+            const grid = document.getElementById('palette-grid');
+            grid.innerHTML = '';
+            for (let i = 0; i < 100; i++) {
+                const btn = document.createElement('button');
+                btn.id = `p-btn-${i}`;
+                btn.className = `p-btn not-visited`;
+                btn.innerText = i + 1;
+                btn.onclick = () => loadQuestion(i);
+                grid.appendChild(btn);
+            }
+        }
+
+        function updatePaletteUI() {
+            for (let i = 0; i < 100; i++) {
+                const btn = document.getElementById(`p-btn-${i}`);
+                if (!btn) continue;
+
+                btn.className = `p-btn ${questionStates[i]}`;
+                if (i === currentIndex) {
+                    btn.classList.add('current');
+                }
+
+                // Section Filter Visibility
+                if (currentFilter !== 'ALL' && questions[i].section !== currentFilter) {
+                    btn.style.opacity = '0.3';
+                } else {
+                    btn.style.opacity = '1.0';
+                }
+            }
+        }
+
+        // Section Filter
+        function filterSection(sec) {
+            currentFilter = sec;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (sec !== 'ALL') {
+                const firstSecIdx = questions.findIndex(q => q.section === sec);
+                if (firstSecIdx !== -1) loadQuestion(firstSecIdx);
+            }
+            updatePaletteUI();
+        }
+
+        // Submit & Evaluation Logic
+        function confirmSubmit() {
+            let attempted = userAnswers.filter(a => a !== null).length;
+            if (confirm(`You have attempted ${attempted} out of 100 questions. Are you sure you want to submit?`)) {
+                submitTest();
+            }
+        }
+
+        function submitTest() {
+            clearInterval(timerInterval);
+            document.getElementById('test-view').style.display = 'none';
+            document.getElementById('result-view').style.display = 'block';
+
+            let score = 0;
+            let secStats = {
+                'Core': { total: 0, attempted: 0, correct: 0, incorrect: 0, score: 0 },
+                'English': { total: 0, attempted: 0, correct: 0, incorrect: 0, score: 0 },
+                'Maths': { total: 0, attempted: 0, correct: 0, incorrect: 0, score: 0 },
+                'Reasoning': { total: 0, attempted: 0, correct: 0, incorrect: 0, score: 0 }
+            };
+
+            const solContainer = document.getElementById('solutions-container');
+            solContainer.innerHTML = '';
+
+            questions.forEach((q, i) => {
+                const sec = q.section;
+                secStats[sec].total++;
+
+                const uAns = userAnswers[i];
+                let isCorrect = false;
+                let isAttempted = (uAns !== null);
+                let qScore = 0;
+
+                if (isAttempted) {
+                    secStats[sec].attempted++;
+                    if (uAns === q.ans) {
+                        isCorrect = true;
+                        secStats[sec].correct++;
+                        qScore = 1.0;
+                    } else {
+                        secStats[sec].incorrect++;
+                        qScore = -0.25;
+                    }
+                }
+
+                secStats[sec].score += qScore;
+                score += qScore;
+
+                // Render Solution Card
+                const card = document.createElement('div');
+                let cardClass = !isAttempted ? 'sol-unattempted' : (isCorrect ? 'sol-correct' : 'sol-incorrect');
+                let badgeClass = !isAttempted ? 'badge-not-visited' : (isCorrect ? 'badge-answered' : 'badge-not-answered');
+                let badgeText = !isAttempted ? 'UNATTEMPTED (0)' : (isCorrect ? 'CORRECT (+1.0)' : 'INCORRECT (-0.25)');
+
+                card.className = `solution-card ${cardClass}`;
+                card.innerHTML = `
+                    <div class="badge-sol ${badgeClass}">${badgeText}</div>
+                    <div style="font-weight:bold; margin-bottom:8px;">Q${i + 1}. [${q.section} - ${q.topic}] ${q.q}</div>
+                    <div style="margin-left:15px; font-size:0.9rem;">
+                        <p style="color: ${uAns === q.ans ? 'green' : (uAns !== null ? 'red' : 'gray')}; font-weight:600;">
+                            Your Answer: ${uAns !== null ? String.fromCharCode(65 + uAns) + '. ' + q.options[uAns] : 'Not Attempted'}
+                        </p>
+                        <p style="color: green; font-weight:600;">
+                            Correct Answer: ${String.fromCharCode(65 + q.ans)}. ${q.options[q.ans]}
+                        </p>
+                    </div>
+                    <div style="margin-top:10px; padding:10px; background:#eef4fb; border-radius:5px; font-size:0.85rem; color:#333;">
+                        <strong>Explanation:</strong> ${q.explanation}
+                    </div>
+                `;
+                solContainer.appendChild(card);
+            });
+
+            // Update Summary Header
+            document.getElementById('res-score').innerText = `${score.toFixed(2)} / 100.00`;
+            const pct = (score / 100) * 100;
+            document.getElementById('res-percentage').innerText = `Percentage: ${pct.toFixed(2)}% | Status: ${score >= 60 ? 'QUALIFIED (Above Estimated Cutoff)' : 'NEEDS IMPROVEMENT'}`;
+
+            // Update Section Table
+            const tbody = document.getElementById('sec-summary-body');
+            tbody.innerHTML = '';
+            for (const [secName, stats] of Object.entries(secStats)) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight:bold; text-align:left; padding-left:15px;">${secName}</td>
+                    <td>${stats.total}</td>
+                    <td>${stats.attempted}</td>
+                    <td>${stats.correct}</td>
+                    <td>${stats.incorrect}</td>
+                    <td style="font-weight:bold;">${stats.score.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+
+        // Start on load
+        window.onload = initTest;
+    </script>
+</body>
+</html>
