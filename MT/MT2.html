@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOCL CBT Mock Test - Chemical Engineering Officer</title>
+    <style>
+        :root {
+            --iocl-orange: #f37021;
+            --iocl-blue: #003366;
+            --bg-gray: #f4f6f9;
+            --card-border: #dcdcdc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-gray);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Header Bar */
+        header {
+            background-color: var(--iocl-blue);
+            color: #fff;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--iocl-orange);
+        }
+
+        header h1 {
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .timer-box {
+            background: #fff;
+            color: #d9534f;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Main Container Layout */
+        .cbt-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Left/Center Panel - Question Area */
+        .question-container {
+            flex: 3;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #fff;
+            margin: 10px;
+            border-radius: 6px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .section-tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--iocl-blue);
+            background: #fff;
+            color: var(--iocl-blue);
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .tab-btn.active {
+            background: var(--iocl-blue);
+            color: #fff;
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--iocl-blue);
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid var(--card-border);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .option-item:hover {
+            background-color: #f0f4f8;
+        }
+
+        .option-item input {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        /* Navigation Action Bar */
+        .action-bar {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .btn-prev { background: #6c757d; color: #fff; }
+        .btn-next { background: var(--iocl-orange); color: #fff; }
+        .btn-mark { background: #ffc107; color: #333; }
+        .btn-clear { background: #e2e3e5; color: #333; }
+
+        /* Right Panel - Palette */
+        .palette-container {
+            flex: 1;
+            background: #fff;
+            margin: 10px 10px 10px 0;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            max-width: 320px;
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge {
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .badge-answered { background: #28a745; }
+        .badge-not-answered { background: #dc3545; }
+        .badge-marked { background: #ffc107; }
+        .badge-not-visited { background: #e2e3e5; border: 1px solid #ccc; }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .q-btn {
+            height: 38px;
+            border: 1px solid #ccc;
+            background: #e2e3e5;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .q-btn.answered { background: #28a745; color: #fff; border: none; }
+        .q-btn.not-answered { background: #dc3545; color: #fff; border: none; }
+        .q-btn.marked { background: #ffc107; color: #000; border: none; }
+        .q-btn.current { border: 2px solid var(--iocl-blue); }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--iocl-blue);
+            color: #fff;
+            padding: 12px;
+            font-size: 1rem;
+            margin-top: 15px;
+        }
+
+        /* Results Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            width: 80%;
+            max-width: 700px;
+            max-height: 85vh;
+            border-radius: 8px;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .score-box {
+            text-align: center;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .review-item {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>IOCL Officer CBT Practice Test (Chemical Engineering)</h1>
+        <div class="timer-box" id="timer">60:00</div>
+    </header>
+
+    <div class="cbt-container">
+        <!-- Question Section -->
+        <div class="question-container">
+            <div>
+                <div class="section-tabs">
+                    <button class="tab-btn active" onclick="switchSection('chem')">Chemical Engg</button>
+                    <button class="tab-btn" onclick="switchSection('quant')">Quantitative Aptitude</button>
+                    <button class="tab-btn" onclick="switchSection('reason')">Logical Reasoning</button>
+                    <button class="tab-btn" onclick="switchSection('eng')">General English</button>
+                </div>
+
+                <div class="question-header" id="q-number">Question 1</div>
+                <div class="question-text" id="q-text">Loading question...</div>
+                
+                <ul class="options-list" id="options-container">
+                    <!-- Options injected via JS -->
+                </ul>
+            </div>
+
+            <div class="action-bar">
+                <div>
+                    <button class="btn btn-mark" onclick="markForReview()">Mark for Review</button>
+                    <button class="btn btn-clear" onclick="clearResponse()">Clear Response</button>
+                </div>
+                <div>
+                    <button class="btn btn-prev" onclick="prevQuestion()">Previous</button>
+                    <button class="btn btn-next" onclick="nextQuestion()">Save & Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Palette Section -->
+        <div class="palette-container">
+            <div>
+                <h3 style="margin-bottom: 12px; color: var(--iocl-blue);">Question Palette</h3>
+                <div class="legend">
+                    <div class="legend-item"><span class="badge badge-answered"></span> Answered</div>
+                    <div class="legend-item"><span class="badge badge-not-answered"></span> Not Answered</div>
+                    <div class="legend-item"><span class="badge badge-marked"></span> Marked</div>
+                    <div class="legend-item"><span class="badge badge-not-visited"></span> Not Visited</div>
+                </div>
+                <div class="palette-grid" id="palette-grid">
+                    <!-- Question palette buttons injected via JS -->
+                </div>
+            </div>
+            <button class="btn btn-submit" onclick="submitTest()">Submit Test</button>
+        </div>
+    </div>
+
+    <!-- Modal for Test Summary -->
+    <div class="modal" id="result-modal">
+        <div class="modal-content">
+            <h2 style="color: var(--iocl-blue); margin-bottom: 10px;">Test Result Summary</h2>
+            <div class="score-box">
+                <h3 id="score-text">Score: 0 / 12</h3>
+                <p id="accuracy-text">Accuracy: 0%</p>
+            </div>
+            <h3>Detailed Solutions</h3>
+            <div id="solutions-container" style="margin-top: 15px;"></div>
+            <button class="btn btn-submit" onclick="location.reload()" style="margin-top: 20px;">Retake Test</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // Chemical Engineering (Domain)
+            {
+                section: 'chem',
+                q: "For a first-order liquid-phase reaction A → B taking place in an isothermal batch reactor, the half-life (t<sub>1/2</sub>) is 20 minutes. What is the total time required to achieve 87.5% conversion of reactant A?",
+                options: ["40 minutes", "60 minutes", "80 minutes", "100 minutes"],
+                answer: 1,
+                explanation: "For 1st order reaction, 87.5% conversion means 12.5% (or 1/8) reactant remains. Remaining fraction = (1/2)^n = 1/8 => n = 3 half-lives. Total time = 3 * 20 = 60 minutes."
+            },
+            {
+                section: 'chem',
+                q: "In a counter-current heat exchanger, fluid A enters at 100°C and exits at 60°C. Fluid B enters at 20°C and leaves at 50°C. What is the Logarithmic Mean Temperature Difference (LMTD)?",
+                options: ["30.0°C", "43.3°C", "44.8°C", "50.0°C"],
+                answer: 2,
+                explanation: "ΔT1 = 100 - 50 = 50°C. ΔT2 = 60 - 20 = 40°C. LMTD = (50 - 40) / ln(50/40) = 10 / ln(1.25) ≈ 10 / 0.2231 = 44.81°C."
+            },
+            {
+                section: 'chem',
+                q: "Which condition ensures that a centrifugal pump will operate safely without experiencing cavitation?",
+                options: ["NPSH<sub>available</sub> < NPSH<sub>required</sub>", "NPSH<sub>available</sub> = 0", "NPSH<sub>available</sub> > NPSH<sub>required</sub>", "Vapor pressure exceeds suction pressure"],
+                answer: 2,
+                explanation: "Cavitation occurs when local pressure drops below liquid vapor pressure. To prevent cavitation, NPSH available must strictly exceed NPSH required."
+            },
+
+            // Quantitative Aptitude (Advanced)
+            {
+                section: 'quant',
+                q: "Pipe A can fill an industrial storage tank in 12 hours. Due to a leak at the bottom, it takes 15 hours to fill it completely. If the tank is completely full and Pipe A is closed, how many hours will the leak alone take to empty the entire tank?",
+                options: ["45 hours", "50 hours", "60 hours", "75 hours"],
+                answer: 2,
+                explanation: "Work rate of Pipe A = 1/12. Combined rate with leak = 1/15. Leak rate = 1/12 - 1/15 = (5 - 4)/60 = 1/60. Thus, leak empties the tank in 60 hours."
+            },
+            {
+                section: 'quant',
+                q: "A chemical container holds 80 liters of pure solvent. First, 16 liters of solvent is withdrawn and replaced with water. Next, 16 liters of the mixture is withdrawn and replaced with water. What is the final quantity of pure solvent remaining?",
+                options: ["51.2 liters", "48.0 liters", "52.4 liters", "44.8 liters"],
+                answer: 0,
+                explanation: "Final Volume = Initial Volume * (1 - x/V)^n = 80 * (1 - 16/80)^2 = 80 * (4/5)^2 = 80 * 16/25 = 51.2 liters."
+            },
+            {
+                section: 'quant',
+                q: "Two vessels containing acid solutions of concentration 40% and 70% are mixed to produce 600 liters of 50% acid solution. What volume of the 70% acid solution was used?",
+                options: ["150 liters", "200 liters", "300 liters", "400 liters"],
+                answer: 1,
+                explanation: "By allegation ratio: (70 - 50) : (50 - 40) = 20 : 10 = 2 : 1 (Ratio of 40% to 70%). Total parts = 3. Volume of 70% solution = (1/3) * 600 = 200 liters."
+            },
+
+            // Logical Reasoning (Advanced)
+            {
+                section: 'reason',
+                q: "Six plant supervisors (P, Q, R, S, T, U) are assigned to three departments: Operations, Safety, and Maintenance, with 2 per department. R is in Safety. S and U are in the same department, but not Operations. Q is not in Safety. P and T are in different departments. Who belongs to Operations?",
+                options: ["P and Q", "Q and T", "R and P", "T and U"],
+                answer: 0,
+                explanation: "S & U must be in Maintenance (since not Ops and Safety already has R). Q is not in Safety, so Q must be in Operations. R is in Safety. Remaining are P & T. One goes to Ops, one to Safety. So Ops has Q and either P or T. Option (A) P and Q fits."
+            },
+            {
+                section: 'reason',
+                q: "In a certain code language, 'PRACTICE' is written as 'FBJSDZSO' by reversing the word order and applying alternating shifts (+1, -1, +1, -1...). How is 'SOLUTION' coded using the same rule?",
+                options: ["OVPJUMPT", "OVPJTMPT", "NVPJTMRS", "OUPJTMPT"],
+                answer: 1,
+                explanation: "Reverse of SOLUTION = N O I T U L O S. Apply (+1, -1, +1, -1, +1, -1, +1, -1): N+1=O, O-1=V... N->O, O->V, I->P, T->J, U->T, L->M, O->P, S->T. Result: OVPJTMPT."
+            },
+            {
+                section: 'reason',
+                q: "Statements: All solar panels generate electricity. Some devices generating electricity require battery storage. No device requiring battery storage is maintenance-free. Conclusions: I. Some solar panels require battery storage. II. Some devices requiring battery storage can be solar panels.",
+                options: ["Only I follows", "Only II follows", "Both I and II follow", "Neither follows"],
+                answer: 1,
+                explanation: "Solar panels and battery storage devices overlap through 'electricity generation' as a possibility, but not certainty. Conclusion II is a valid possibility statement. Conclusion I is definite statement and cannot be proven strictly."
+            },
+
+            // General English
+            {
+                section: 'eng',
+                q: "Select the word that best completes the sentence: 'Despite facing several unexpected technical delays during the launch phase, the engineering team remained _____ and successfully brought the project back on track.'",
+                options: ["reluctant", "resilient", "indifferent", "redundant"],
+                answer: 1,
+                explanation: "'Resilient' means able to withstand or recover quickly from difficult conditions, fitting the context of overcoming technical delays."
+            },
+            {
+                section: 'eng',
+                q: "Identify the part of the sentence containing an error: 'Neither the senior manager nor the project team members (A) / was informed about the structural budget cuts (B) / prior to the quarterly meeting (C) / held yesterday. (D)'",
+                options: ["Part A", "Part B", "Part C", "Part D"],
+                answer: 1,
+                explanation: "In 'Neither... nor' structures, the verb agrees with the subject closest to it. 'Team members' is plural, so 'was' should be replaced with 'were'."
+            },
+            {
+                section: 'eng',
+                q: "Which word is most nearly OPPOSITE in meaning to 'SPORADIC'?",
+                options: ["Occasional", "Continuous", "Irregular", "Scattered"],
+                answer: 1,
+                explanation: "'Sporadic' means occurring at irregular intervals or scattered. The direct antonym is 'Continuous'."
+            }
+        ];
+
+        let currentIndex = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let status = new Array(questions.length).fill('not-visited'); // 'not-visited', 'answered', 'not-answered', 'marked'
+
+        function initTest() {
+            renderPalette();
+            loadQuestion(0);
+            startTimer(60 * 60); // 60 minutes
+        }
+
+        function loadQuestion(index) {
+            currentIndex = index;
+            const q = questions[index];
+
+            if (status[index] === 'not-visited') {
+                status[index] = 'not-answered';
+            }
+
+            document.getElementById('q-number').innerText = `Question ${index + 1} (${q.section.toUpperCase()})`;
+            document.getElementById('q-text').innerHTML = q.q;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, i) => {
+                const li = document.createElement('li');
+                li.className = 'option-item';
+                li.innerHTML = `
+                    <input type="radio" name="opt" id="opt_${i}" value="${i}" ${userAnswers[index] === i ? 'checked' : ''}>
+                    <label for="opt_${i}">${opt}</label>
+                `;
+                li.onclick = () => {
+                    document.getElementById(`opt_${i}`).checked = true;
+                    userAnswers[index] = i;
+                };
+                optionsContainer.appendChild(li);
+            });
+
+            // Update Tab Highlight
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            const currentTabBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(q.section));
+            if(currentTabBtn) currentTabBtn.classList.add('active');
+
+            renderPalette();
+        }
+
+        function renderPalette() {
+            const grid = document.getElementById('palette-grid');
+            grid.innerHTML = '';
+            questions.forEach((_, i) => {
+                const btn = document.createElement('button');
+                btn.className = `q-btn ${status[i]}`;
+                if (i === currentIndex) btn.classList.add('current');
+                btn.innerText = i + 1;
+                btn.onclick = () => loadQuestion(i);
+                grid.appendChild(btn);
+            });
+        }
+
+        function nextQuestion() {
+            if (userAnswers[currentIndex] !== null && status[currentIndex] !== 'marked') {
+                status[currentIndex] = 'answered';
+            }
+            if (currentIndex < questions.length - 1) {
+                loadQuestion(currentIndex + 1);
+            } else {
+                renderPalette();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                loadQuestion(currentIndex - 1);
+            }
+        }
+
+        function clearResponse() {
+            userAnswers[currentIndex] = null;
+            status[currentIndex] = 'not-answered';
+            loadQuestion(currentIndex);
+        }
+
+        function markForReview() {
+            if (userAnswers[currentIndex] !== null) {
+                status[currentIndex] = 'marked';
+            } else {
+                status[currentIndex] = 'marked';
+            }
+            nextQuestion();
+        }
+
+        function switchSection(sectionName) {
+            const index = questions.findIndex(q => q.section === sectionName);
+            if (index !== -1) loadQuestion(index);
+        }
+
+        function startTimer(durationSeconds) {
+            let timer = durationSeconds;
+            const display = document.getElementById('timer');
+            const interval = setInterval(() => {
+                const minutes = Math.floor(timer / 60);
+                const seconds = timer % 60;
+                display.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    submitTest();
+                }
+            }, 1000);
+        }
+
+        function submitTest() {
+            let score = 0;
+            let answeredCount = 0;
+            const solutionsContainer = document.getElementById('solutions-container');
+            solutionsContainer.innerHTML = '';
+
+            questions.forEach((q, i) => {
+                const isCorrect = userAnswers[i] === q.answer;
+                if (userAnswers[i] !== null) answeredCount++;
+                if (isCorrect) score++;
+
+                const solDiv = document.createElement('div');
+                solDiv.className = 'review-item';
+                solDiv.innerHTML = `
+                    <p><strong>Q${i + 1}: ${q.q}</strong></p>
+                    <p>Your Answer: ${userAnswers[i] !== null ? q.options[userAnswers[i]] : '<span style="color:red">Unanswered</span>'}</p>
+                    <p>Correct Answer: <span style="color:green">${q.options[q.answer]}</span></p>
+                    <p style="font-size:0.9rem; color:#555; margin-top:4px;"><em>Explanation: ${q.explanation}</em></p>
+                `;
+                solutionsContainer.appendChild(solDiv);
+            });
+
+            document.getElementById('score-text').innerText = `Score: ${score} / ${questions.length}`;
+            const accuracy = answeredCount > 0 ? ((score / answeredCount) * 100).toFixed(1) : 0;
+            document.getElementById('accuracy-text').innerText = `Accuracy: ${accuracy}% | Attempted: ${answeredCount}/${questions.length}`;
+            document.getElementById('result-modal').style.display = 'flex';
+        }
+
+        window.onload = initTest;
+    </script>
+</body>
+</html>
