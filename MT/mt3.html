@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOCL Chemical Officer CBT Full 100-Question Mock Test</title>
+    <style>
+        :root {
+            --iocl-orange: #f37021;
+            --iocl-blue: #003366;
+            --bg-gray: #f4f6f9;
+            --card-border: #dcdcdc;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: var(--bg-gray); color: #333; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        header { background-color: var(--iocl-blue); color: #fff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--iocl-orange); }
+        header h1 { font-size: 1.1rem; }
+        .timer-box { background: #fff; color: #d9534f; padding: 6px 14px; border-radius: 4px; font-weight: bold; font-size: 1.1rem; }
+        .cbt-container { display: flex; flex: 1; overflow: hidden; }
+        .question-container { flex: 3; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; background: #fff; margin: 10px; border-radius: 6px; box-shadow: 0 1px 5px rgba(0,0,0,0.1); overflow-y: auto; }
+        .section-tabs { display: flex; gap: 6px; border-bottom: 2px solid #eee; padding-bottom: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .tab-btn { padding: 6px 12px; border: 1px solid var(--iocl-blue); background: #fff; color: var(--iocl-blue); border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+        .tab-btn.active { background: var(--iocl-blue); color: #fff; }
+        .question-header { font-weight: bold; font-size: 1rem; margin-bottom: 12px; color: var(--iocl-blue); }
+        .question-text { font-size: 1rem; margin-bottom: 18px; line-height: 1.5; }
+        .options-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .option-item { display: flex; align-items: center; padding: 10px 14px; border: 1px solid var(--card-border); border-radius: 5px; cursor: pointer; }
+        .option-item:hover { background-color: #f0f4f8; }
+        .option-item input { margin-right: 12px; transform: scale(1.1); }
+        .action-bar { margin-top: 20px; display: flex; justify-content: space-between; border-top: 1px solid #eee; padding-top: 12px; }
+        .btn { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
+        .btn-prev { background: #6c757d; color: #fff; }
+        .btn-next { background: var(--iocl-orange); color: #fff; }
+        .btn-mark { background: #ffc107; color: #333; }
+        .btn-clear { background: #e2e3e5; color: #333; }
+        .palette-container { flex: 1; background: #fff; margin: 10px 10px 10px 0; border-radius: 6px; padding: 12px; box-shadow: 0 1px 5px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; max-width: 320px; }
+        .legend { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.75rem; margin-bottom: 10px; }
+        .legend-item { display: flex; align-items: center; gap: 4px; }
+        .badge { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+        .badge-answered { background: #28a745; }
+        .badge-not-answered { background: #dc3545; }
+        .badge-marked { background: #ffc107; }
+        .badge-not-visited { background: #e2e3e5; border: 1px solid #ccc; }
+        .palette-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 420px; overflow-y: auto; padding: 4px; }
+        .q-btn { height: 32px; border: 1px solid #ccc; background: #e2e3e5; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.8rem; }
+        .q-btn.answered { background: #28a745; color: #fff; border: none; }
+        .q-btn.not-answered { background: #dc3545; color: #fff; border: none; }
+        .q-btn.marked { background: #ffc107; color: #000; border: none; }
+        .q-btn.current { border: 2px solid var(--iocl-blue); }
+        .btn-submit { width: 100%; background: var(--iocl-blue); color: #fff; padding: 10px; font-size: 0.95rem; margin-top: 10px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: #fff; width: 85%; max-width: 800px; max-height: 85vh; border-radius: 8px; padding: 20px; overflow-y: auto; }
+        .score-box { text-align: center; padding: 12px; background: #e9ecef; border-radius: 6px; margin-bottom: 15px; }
+        .review-item { margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>IOCL Chemical Officer CBT (Full 100 Qs Mock Test)</h1>
+        <div class="timer-box" id="timer-display">90:00</div>
+    </header>
+
+    <div class="cbt-container">
+        <div class="question-container">
+            <div>
+                <div class="section-tabs">
+                    <button class="tab-btn active" id="tab-chem" onclick="switchSection('chem')">Chemical Engg (1-50)</button>
+                    <button class="tab-btn" id="tab-quant" onclick="switchSection('quant')">Quantitative (51-65)</button>
+                    <button class="tab-btn" id="tab-reason" onclick="switchSection('reason')">Reasoning (66-80)</button>
+                    <button class="tab-btn" id="tab-eng" onclick="switchSection('eng')">English (81-100)</button>
+                </div>
+
+                <div class="question-header" id="q-number">Question 1</div>
+                <div class="question-text" id="q-text">Loading question...</div>
+                
+                <ul class="options-list" id="options-container"></ul>
+            </div>
+
+            <div class="action-bar">
+                <div>
+                    <button class="btn btn-mark" onclick="markForReview()">Mark for Review</button>
+                    <button class="btn btn-clear" onclick="clearResponse()">Clear Response</button>
+                </div>
+                <div>
+                    <button class="btn btn-prev" onclick="prevQuestion()">Previous</button>
+                    <button class="btn btn-next" onclick="nextQuestion()">Save & Next</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="palette-container">
+            <div>
+                <h3 style="margin-bottom: 8px; color: var(--iocl-blue); font-size: 0.95rem;">Question Palette</h3>
+                <div class="legend">
+                    <div class="legend-item"><span class="badge badge-answered"></span> Answered</div>
+                    <div class="legend-item"><span class="badge badge-not-answered"></span> Unanswered</div>
+                    <div class="legend-item"><span class="badge badge-marked"></span> Marked</div>
+                    <div class="legend-item"><span class="badge badge-not-visited"></span> Not Visited</div>
+                </div>
+                <div class="palette-grid" id="palette-grid"></div>
+            </div>
+            <button class="btn btn-submit" onclick="submitTest()">Submit Test</button>
+        </div>
+    </div>
+
+    <div class="modal" id="result-modal">
+        <div class="modal-content">
+            <h2 style="color: var(--iocl-blue); margin-bottom: 10px;">CBT Test Result & Analysis</h2>
+            <div class="score-box">
+                <h3 id="score-text">Score: 0 / 100</h3>
+                <p id="accuracy-text">Accuracy: 0%</p>
+            </div>
+            <h3>Detailed Answer Key & Solutions</h3>
+            <div id="solutions-container" style="margin-top: 12px;"></div>
+            <button class="btn btn-submit" onclick="location.reload()" style="margin-top: 15px;">Retake Test</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // CHEMICAL ENGINEERING (1-50)
+            {s:'chem', q:"1. For a first-order liquid-phase reaction A → B, the half-life is 20 minutes. Time required for 87.5% conversion is:", o:["40 min", "60 min", "80 min", "100 min"], a:1, e:"87.5% conversion means 1/8th fraction remains = (1/2)^3. Total time = 3 * 20 = 60 minutes."},
+            {s:'chem', q:"2. In a counter-current heat exchanger, fluid A cools from 100°C to 60°C while fluid B heats from 20°C to 50°C. LMTD is:", o:["30.0°C", "43.3°C", "44.8°C", "50.0°C"], a:2, e:"ΔT1=50°C, ΔT2=40°C. LMTD = (50-40)/ln(50/40) = 44.81°C."},
+            {s:'chem', q:"3. To prevent cavitation in a centrifugal pump, which condition must hold true?", o:["NPSHA < NPSHR", "NPSHA = 0", "NPSHA > NPSHR", "Suction pressure < Vapor pressure"], a:2, e:"NPSH Available must exceed NPSH Required to prevent liquid vaporisation."},
+            {s:'chem', q:"4. In McCabe-Thiele method, as reflux ratio approaches minimum reflux ratio (Rmin):", o:["Number of stages approaches infinity", "Reboiler duty becomes zero", "Column diameter becomes zero", "Condenser load is zero"], a:0, e:"At minimum reflux, pinch point occurs and theoretical stages tend to infinity."},
+            {s:'chem', q:"5. Upper critical Reynolds number for laminar flow in a smooth circular pipe is approximately:", o:["1000", "2100", "4000", "10000"], a:1, e:"Transition from laminar to turbulent flow begins around Re = 2100 - 2300."},
+            {s:'chem', q:"6. Bernoulli's equation is derived assuming the fluid is:", o:["Real and compressible", "Inviscid, incompressible, and steady", "Viscous and unsteady", "Rotational and compressible"], a:1, e:"Bernoulli's equation applies to inviscid, incompressible, steady, and irrotational flow along a streamline."},
+            {s:'chem', q:"7. The ratio of convective heat transfer to conductive heat transfer in a fluid boundary layer is:", o:["Prandtl Number", "Nusselt Number", "Sherwood Number", "Peclet Number"], a:1, e:"Nusselt Number (Nu = hL/k) represents ratio of convective to conductive heat transfer."},
+            {s:'chem', q:"8. Coefficient of discharge (Cd) for a standard orifice meter is approximately:", o:["0.98", "0.61", "0.85", "0.40"], a:1, e:"Cd for orifice meter is ~0.61; venturimeter is ~0.98."},
+            {s:'chem', q:"9. For fully developed turbulent flow in a completely rough pipe, friction factor depends on:", o:["Reynolds number only", "Relative roughness only", "Both Re and relative roughness", "Mach number"], a:1, e:"At very high Re in rough pipes, friction factor becomes independent of Re and depends only on relative roughness."},
+            {s:'chem', q:"10. According to Stefan-Boltzmann Law, total emissive power of a blackbody is proportional to:", o:["T", "T²", "T³", "T⁴"], a:3, e:"E = σ * T^4."},
+            {s:'chem', q:"11. SI units of thermal conductivity (k) are:", o:["W/m K", "W/m² K", "J/m K", "W/K"], a:0, e:"q = -k A dT/dx => k = W / (m * K)."},
+            {s:'chem', q:"12. The Prandtl number (Pr) is defined as:", o:["Kinematic viscosity / Thermal diffusivity", "Thermal diffusivity / Kinematic viscosity", "Absolute viscosity * Density", "Conductivity / Viscosity"], a:0, e:"Pr = ν / α = μ Cp / k."},
+            {s:'chem', q:"13. For a single-pass cross-flow heat exchanger, effectiveness NTU method is preferred when:", o:["Outlet temperatures are unknown", "Inlet temperatures are unknown", "Area is unknown", "Fluid properties vary greatly"], a:0, e:"NTU method avoids iterative LMTD calculations when outlet temperatures are unknown."},
+            {s:'chem', q:"14. Critical radius of insulation for a cylinder is equal to:", o:["k / h", "2k / h", "h / k", "k * h"], a:0, e:"rc = k / h for cylinder, 2k/h for sphere."},
+            {s:'chem', q:"15. Fick's first law of binary diffusion relates molar flux to:", o:["Concentration gradient", "Temperature gradient", "Pressure gradient", "Velocity gradient"], a:0, e:"J = -D (dC/dx)."},
+            {s:'chem', q:"16. Rayleigh equation is used in the design of:", o:["Continuous distillation", "Differential batch distillation", "Gas absorption", "Liquid-liquid extraction"], a:1, e:"ln(W1/W2) = ∫ dx / (y - x) applies to differential batch distillation."},
+            {s:'chem', q:"17. Wet bulb temperature equals dry bulb temperature when relative humidity is:", o:["0%", "50%", "75%", "100%"], a:3, e:"At 100% relative humidity, air is saturated, so dry bulb = wet bulb = dew point."},
+            {s:'chem', q:"18. During the constant rate drying period, liquid movement within the solid is governed by:", o:["Capillary forces / surface evaporation", "Internal diffusion", "Thermal cracking", "Gravity drainage only"], a:0, e:"Evaporation happens at the external surface supplied by capillary moisture flow."},
+            {s:'chem', q:"19. For a positive order reaction, to achieve the same conversion, CSTR volume is:", o:["Smaller than PFR volume", "Equal to PFR volume", "Larger than PFR volume", "Zero"], a:2, e:"CSTR operates at lowest reactant concentration (exit stream), so it requires larger volume than PFR."},
+            {s:'chem', q:"20. Slope of Arrhenius plot (ln k vs 1/T) gives:", o:["-Ea / R", "Ea / R", "-Ea", "R / Ea"], a:0, e:"k = A exp(-Ea/RT) => ln k = ln A - (Ea/R)(1/T). Slope = -Ea/R."},
+            {s:'chem', q:"21. Space time in a chemical reactor is defined as:", o:["1 / Space Velocity", "Reactor Volume * Volumetric Flow Rate", "Conversion / Time", "Feed rate / Volume"], a:0, e:"Space time τ = V / v0 = 1 / S."},
+            {s:'chem', q:"22. Catalyst effectiveness factor (η) is 1 when:", o:["Pore diffusion resistance is negligible", "Reaction is mass transfer controlled", "Pore diffusion is infinite", "Temperature is zero"], a:0, e:"When internal diffusion resistance is negligible, catalyst operates at surface concentration, η = 1."},
+            {s:'chem', q:"23. For a zero-order reaction A → Product, time for complete conversion is:", o:["CA0 / k", "1 / (k CA0)", "ln(2) / k", "Infinite"], a:0, e:"-dCA/dt = k => t = CA0 / k."},
+            {s:'chem', q:"24. First Law of Thermodynamics for an open system operating at steady state is:", o:["q - w = ΔH + ΔKE + ΔPE", "q + w = ΔU", "q = TdS", "dH = TdS - VdP"], a:0, e:"Steady Flow Energy Equation (SFEE)."},
+            {s:'chem', q:"25. Efficiency of a Carnot engine operating between 300 K and 600 K is:", o:["25%", "33.3%", "50%", "66.7%"], a:2, e:"η = 1 - T_low/T_high = 1 - 300/600 = 50%."},
+            {s:'chem', q:"26. Joule-Thomson coefficient for an ideal gas is:", o:["Positive", "Negative", "Zero", "Infinite"], a:2, e:"Ideal gas enthalpy depends only on T, so μ_JT = (dT/dP)_H = 0."},
+            {s:'chem', q:"27. Gibbs Phase Rule for non-reacting system is expressed as:", o:["F = C - P + 2", "F = C + P - 2", "F = P - C + 1", "F = C - P + 1"], a:0, e:"F = C - P + 2."},
+            {s:'chem', q:"28. Fugacity coefficient (φ) of an ideal gas is:", o:["0", "0.5", "1.0", "Infinity"], a:2, e:"For ideal gas, fugacity f = P, so φ = f/P = 1."},
+            {s:'chem', q:"29. Differential equation of a single liquid level tank system yields a response of order:", o:["Zero", "First", "Second", "Third"], a:1, e:"A dh/dt + h/R = q_in is a first-order dynamic system."},
+            {s:'chem', q:"30. Adding Derivative action to a PI controller:", o:["Increases offset", "Improves stability and speeds response", "Eliminates steady-state error", "Slows down system"], a:1, e:"Derivative action provides anticipatory control, improving stability margin."},
+            {s:'chem', q:"31. In Routh-Hurwitz stability criterion, a system is stable if all elements in 1st column of Routh array:", o:["Are zero", "Have the same algebraic sign", "Are negative", "Are integers"], a:1, e:"No sign changes in the 1st column implies all roots lie in left-half s-plane."},
+            {s:'chem', q:"32. Control valve with Air-to-Open characteristic fails in which position upon air supply loss?", o:["Fully Open", "Fully Closed", "50% Open", "Last position"], a:1, e:"Air-to-Open valve requires pressure to open; without air, spring closes it (Fail Closed)."},
+            {s:'chem', q:"33. Industrial catalyst used in Haber-Bosch Ammonia synthesis is:", o:["Iron with K2O & Al2O3 promoters", "V2O5", "Nickel on alumina", "Platinum-Rhodium"], a:0, e:"Promoted Iron catalyst is standard for Ammonia synthesis."},
+            {s:'chem', q:"34. Catalyst used in modern Contact Process for Sulfuric acid manufacture is:", o:["V2O5", "Pt", "Fe2O3", "Ni"], a:0, e:"Vanadium Pentoxide (V2O5) is resistant to poison like arsenic compared to Pt."},
+            {s:'chem', q:"35. Steam reforming of Methane primarily yields:", o:["Synthesis gas (CO + H2)", "CO2 + H2O", "Ethane + Water", "Pure Carbon"], a:0, e:"CH4 + H2O → CO + 3H2."},
+            {s:'chem', q:"36. In petroleum refining, Fluid Catalytic Cracking (FCC) is primarily used to convert:", o:["Heavy gas oils into high-octane gasoline", "Naphtha to LPG", "Kerosene to Diesel", "Asphalt to Coke"], a:0, e:"FCC breaks heavy VGO/vacuum gas oil into lighter gasoline fractions."},
+            {s:'chem', q:"37. Reference fuel components for Octane Rating are Iso-octane and:", o:["n-Heptane", "n-Hexane", "Benzene", "Toluene"], a:0, e:"Iso-octane = 100, n-Heptane = 0."},
+            {s:'chem', q:"38. High-density polyethylene (HDPE) is manufactured using:", o:["Ziegler-Natta catalyst", "Peroxide initiator at high pressure", "Free radical water emulsion", "UV radiation"], a:0, e:"Ziegler-Natta catalyst allows low-pressure, linear HDPE polymerization."},
+            {s:'chem', q:"39. Purpose of adding Gypsum to Cement clinker is to:", o:["Retard setting time", "Accelerate setting time", "Increase final strength", "Reduce heat of hydration"], a:0, e:"Gypsum prevents flash setting of cement."},
+            {s:'chem', q:"40. Unit of dynamic viscosity in CGS system is:", o:["Poise", "Stokes", "Pascal-second", "Kinem"], a:0, e:"1 Poise = 1 g/(cm s) = 0.1 Pa s."},
+            {s:'chem', q:"41. Equivalent diameter for fluid flow through non-circular duct of cross-section A and wetted perimeter P is:", o:["4A / P", "2A / P", "A / 4P", "A / P"], a:0, e:"De = 4 * Hydraulic Radius = 4 * (A / P)."},
+            {s:'chem', q:"42. Thiele Modulus (ϕ) for a 1st order porous catalytic reaction relates:", o:["Surface reaction rate to pore diffusion rate", "Convection to conduction", "Heat transfer to mass transfer", "Boundary layer thickness"], a:0, e:"ϕ² = (Intrinsic reaction rate) / (Pore diffusion rate)."},
+            {s:'chem', q:"43. Schmidt number (Sc) is the ratio of:", o:["Kinematic viscosity to mass diffusivity", "Thermal diffusivity to mass diffusivity", "Momentum diffusivity to thermal diffusivity", "Velocity to speed of sound"], a:0, e:"Sc = ν / DAB."},
+            {s:'chem', q:"44. Lewis number (Le) equals 1 when:", o:["Thermal boundary layer equals concentration boundary layer", "Re = 1", "Pr = 100", "Sc = 0"], a:0, e:"Le = α / DAB = Sc / Pr. When Le=1, thermal and concentration profiles match."},
+            {s:'chem', q:"45. Minimum number of components required to form an azeotrope is:", o:["1", "2", "3", "4"], a:1, e:"Azeotropes are constant boiling binary (or multi) mixtures."},
+            {s:'chem', q:"46. In a packed column, flooding is indicated by:", o:["Sharp rise in pressure drop across packing", "Drop in liquid holdup", "Increased separation efficiency", "Decrease in pressure drop"], a:0, e:"Flooding occurs when gas velocity prevents downward liquid flow, causing steep pressure drop spike."},
+            {s:'chem', q:"47. Heat transfer mechanism dominant in vacuum insulation (Thermos flask) is:", o:["Radiation", "Conduction", "Convection", "Advection"], a:0, e:"Vacuum eliminates conduction and convection; thermal radiation remains."},
+            {s:'chem', q:"48. Internal energy of an ideal gas depends solely on:", o:["Temperature", "Pressure", "Volume", "Density"], a:0, e:"Joule's Law: U = f(T) only for ideal gas."},
+            {s:'chem', q:"49. For a Newtonian fluid, shear stress is directly proportional to:", o:["Velocity gradient (shear rate)", "Square of velocity gradient", "Viscosity squared", "Strain"], a:0, e:"τ = μ (du/dy)."},
+            {s:'chem', q:"50. Schedule number of a commercial steel pipe indicates its:", o:["Wall thickness & pressure rating", "Outer diameter", "Length", "Roughness factor"], a:0, e:"Schedule No ≈ 1000 * (P / S). Higher schedule = thicker wall."},
+
+            // QUANTITATIVE APTITUDE (51-65)
+            {s:'quant', q:"51. Pipe A fills a tank in 12 hrs. A leak at bottom empties full tank in 60 hrs. If both open, time to fill is:", o:["15 hrs", "16 hrs", "18 hrs", "20 hrs"], a:0, e:"Net rate = 1/12 - 1/60 = (5-1)/60 = 4/60 = 1/15 => 15 hours."},
+            {s:'quant', q:"52. Container has 80L pure solvent. 16L withdrawn and replaced with water. Done twice. Final solvent left:", o:["51.2 L", "48.0 L", "52.4 L", "44.8 L"], a:0, e:"Final = 80 * (1 - 16/80)^2 = 80 * (4/5)^2 = 51.2 L."},
+            {s:'quant', q:"53. Mix 40% acid and 70% acid to get 600L of 50% solution. Volume of 70% acid needed:", o:["150 L", "200 L", "300 L", "400 L"], a:1, e:"Allegation ratio (70-50):(50-40) = 20:10 = 2:1. 70% portion = (1/3)*600 = 200L."},
+            {s:'quant', q:"54. Train X leaves A at 8 AM @ 60 km/h. Train Y leaves B (330 km away) at 9 AM @ 75 km/h towards A. They meet at:", o:["11:00 AM", "11:30 AM", "12:00 PM", "10:30 AM"], a:0, e:"At 9 AM, X covered 60km. Rem dist = 270km. Rel speed = 135 km/h. Time = 270/135 = 2 hrs after 9 AM = 11:00 AM."},
+            {s:'quant', q:"55. A does work in 20 days, B in 30 days. They work together but A leaves 4 days before completion. Total days:", o:["12.4 days", "14.4 days", "15 days", "16 days"], a:1, e:"Let total days = x. (x-4)/20 + x/30 = 1 => 3(x-4) + 2x = 60 => 5x - 12 = 60 => 5x = 72 => x = 14.4 days."},
+            {s:'quant', q:"56. Article marked 40% above cost price. Discount of 15% given. Profit percentage is:", o:["19%", "25%", "22%", "18%"], a:0, e:"CP = 100, MP = 140, SP = 140 * 0.85 = 119 => Profit = 19%."},
+            {s:'quant', q:"57. Difference between CI and SI on ₹10,000 for 2 years at 10% per annum compounded annually is:", o:["₹50", "₹100", "₹150", "₹200"], a:1, e:"Diff = P(r/100)^2 = 10000 * (10/100)^2 = ₹100."},
+            {s:'quant', q:"58. Urn contains 5 red and 3 black balls. 2 balls drawn at random. Probability both are red:", o:["5/14", "3/8", "10/28", "15/56"], a:0, e:"(5C2) / (8C2) = 10 / 28 = 5/14."},
+            {s:'quant', q:"59. In how many ways can 5 people be seated around a circular table?", o:["120", "24", "60", "48"], a:1, e:"Circular permutations = (n-1)! = 4! = 24."},
+            {s:'quant', q:"60. Solid metallic sphere of radius 6 cm is melted into smaller spheres of radius 2 cm. Number of spheres:", o:["9", "18", "27", "36"], a:2, e:"Number = (R/r)^3 = (6/2)^3 = 3^3 = 27."},
+            {s:'quant', q:"61. A, B, C enter partnership. A invests ₹20k for 1 yr, B ₹30k for 8 mos, C ₹40k for 6 mos. Profit ratio:", o:["1:1:1", "2:3:4", "1:2:3", "4:3:2"], a:0, e:"Ratio = (20*12) : (30*8) : (40*6) = 240 : 240 : 240 = 1:1:1."},
+            {s:'quant', q:"62. Roots of x² - 7x + 12 = 0 are α and β. Value of α² + β² is:", o:["25", "49", "37", "13"], a:0, e:"α+β = 7, αβ = 12. α²+β² = (α+β)² - 2αβ = 49 - 24 = 25."},
+            {s:'quant', q:"63. Sum of infinite geometric series 12, 4, 4/3, 4/9... is:", o:["16", "18", "20", "24"], a:1, e:"S = a / (1 - r) = 12 / (1 - 1/3) = 12 / (2/3) = 18."},
+            {s:'quant', q:"64. If A:B = 2:3 and B:C = 4:5, then A:B:C is:", o:["8:12:15", "6:8:10", "2:4:5", "8:10:15"], a:0, e:"A:B = 8:12, B:C = 12:15 => A:B:C = 8:12:15."},
+            {s:'quant', q:"65. Avg age of 10 employees is 32. If supervisor aged 54 is included, new average age is:", o:["34", "35", "36", "37"], a:0, e:"Total sum = 320 + 54 = 374. New avg = 374 / 11 = 34."},
+
+            // LOGICAL REASONING (66-80)
+            {s:'reason', q:"66. P, Q, R, S, T, U in 3 depts (Ops, Safety, Maint - 2 each). R in Safety. S & U together in non-Ops. Q not in Safety. P & T in diff depts. Who in Ops?", o:["P and Q", "Q and T", "R and P", "T and U"], a:0, e:"S,U in Maint. R in Safety. Q must be Ops. Ops has Q and P (or T). Option A fits."},
+            {s:'reason', q:"67. Reversing word 'SOLUTION' and applying +1, -1, +1, -1... yields:", o:["OVPJUMPT", "OVPJTMPT", "NVPJTMRS", "OUPJTMPT"], a:1, e:"Reverse: N O I T U L O S. Shift: N+1=O, O-1=V, I+1=P, T-1=J, U+1=T, L-1=M, O+1=P, S-1=T -> OVPJTMPT."},
+            {s:'reason', q:"68. Statements: All A are B. Some B are C. Conclusions: I. Some A are C. II. Some B are A.", o:["Only I follows", "Only II follows", "Both follow", "Neither follows"], a:1, e:"'All A are B' implies 'Some B are A' (II is valid). Connection between A and C is not definite."},
+            {s:'reason', q:"69. Facing North: A, B, C, D, E. B is 2nd from right. C is immediate left of Coffee-lover. Tea-lover at extreme end. D adjacent to B & Water-lover. Extreme left person:", o:["A", "C", "D", "E"], a:0, e:"Arrangement from Left to Right: A(Tea), C(Water), D(Coffee), B(Juice), E(Milk). Extreme left is A."},
+            {s:'reason', q:"70. Pointing to a photo, Vikas said 'Her mother's only son is my father'. How is girl in photo related to Vikas?", o:["Aunt", "Mother", "Sister", "Grandmother"], a:0, e:"Mother's only son = Vikas's father. Thus the girl is Vikas's father's sister = Aunt."},
+            {s:'reason', q:"71. Person walks 10m North, turns Right 15m, turns Right 10m, turns Left 5m. Distance from starting point:", o:["20m", "25m", "15m", "30m"], a:0, e:"North 10 & South 10 cancel. Total East distance = 15 + 5 = 20m."},
+            {s:'reason', q:"72. If '+' means '÷', '-' means '×', '×' means '+', '÷' means '-', then 20 + 4 - 5 × 6 ÷ 2 =", o:["29", "27", "18", "31"], a:0, e:"20 ÷ 4 × 5 + 6 - 2 = 5 × 5 + 6 - 2 = 25 + 6 - 2 = 29."},
+            {s:'reason', q:"73. Find missing term in series: 4, 9, 25, 49, 121, ___", o:["144", "169", "196", "225"], a:1, e:"Squares of prime numbers: 2², 3², 5², 7², 11², 13² = 169."},
+            {s:'reason', q:"74. Odd one out: 27, 64, 125, 144, 216", o:["27", "64", "144", "216"], a:2, e:"All others are perfect cubes (3³, 4³, 5³, 6³). 144 is 12²."},
+            {s:'reason', q:"75. If CAT = 24 and DOG = 26, then PIG =", o:["32", "30", "36", "41"], a:0, e:"P(16) + I(9) + G(7) = 32."},
+            {s:'reason', q:"76. Clock shows 3:30. Angle between hour and minute hand is:", o:["75°", "85°", "90°", "105°"], a:0, e:"Angle = |30*H - 5.5*M| = |30*3 - 5.5*30| = |90 - 165| = 75°."},
+            {s:'reason', q:"77. If 1st Jan 2024 was Monday, what day was 1st Jan 2025? (2024 is leap year)", o:["Tuesday", "Wednesday", "Thursday", "Friday"], a:1, e:"Leap year adds 2 odd days. Monday + 2 days = Wednesday."},
+            {s:'reason', q:"78. Statement: 'Use company transport to ensure punctual arrival.' Assumption: I. Transport is reliable. II. Punctuality is desired.", o:["Only I implicit", "Only II implicit", "Both I and II implicit", "Neither implicit"], a:2, e:"Both assumptions are implicitly assumed by management."},
+            {s:'reason', q:"79. In a row of 40 students, Rakesh is 15th from left. Position from right end:", o:["25th", "26th", "27th", "24th"], a:1, e:"Position = Total - Left + 1 = 40 - 15 + 1 = 26th."},
+            {s:'reason', q:"80. Complete series: Z, W, T, Q, N, ___", o:["K", "L", "M", "J"], a:0, e:"Decreasing by 3 letters each step: N - 3 = K."},
+
+            // GENERAL ENGLISH (81-100)
+            {s:'eng', q:"81. Select option best filling blank: 'Despite launch delays, the team remained _____ and finished on time.'", o:["reluctant", "resilient", "indifferent", "redundant"], a:1, e:"'Resilient' means capable of recovering quickly from setbacks."},
+            {s:'eng', q:"82. Identify grammatical error: 'Neither the senior manager nor the project team members (A) / was informed about the cuts (B) / prior to the meeting. (C)'", o:["Part A", "Part B", "Part C", "No error"], a:1, e:"'team members' is plural, so verb must be 'were informed' (Part B)."},
+            {s:'eng', q:"83. Opposite meaning of 'SPORADIC':", o:["Occasional", "Continuous", "Irregular", "Scattered"], a:1, e:"Sporadic = irregular; Opposite = Continuous."},
+            {s:'eng', q:"84. Synonym of 'MITIGATE':", o:["Aggravate", "Alleviate", "Ignore", "Extend"], a:1, e:"Mitigate = make less severe / alleviate."},
+            {s:'eng', q:"85. Complete idiom: 'To cut corners' means:", o:["To take a shortcut that sacrifices quality", "To turn sharp turns", "To reduce physical space", "To work extra hours"], a:0, e:"'Cutting corners' means doing something cheaply or carelessly."},
+            {s:'eng', q:"86. Choose correct spelling:", o:["Accommodate", "Acommodate", "Accomodate", "Acomodate"], a:0, e:"Correct spelling: A-C-C-O-M-M-O-D-A-T-E."},
+            {s:'eng', q:"87. 'She has been working here _____ 2018.'", o:["for", "since", "from", "during"], a:1, e:"'Since' is used for a specific starting point in time with present perfect tense."},
+            {s:'eng', q:"88. Identify error: 'One of the main reasons for his success are his persistence.'", o:["One of", "reasons for", "are his", "persistence"], a:2, e:"Subject is 'One', singular. Verb should be 'is his persistence'."},
+            {s:'eng', q:"89. Meaning of 'CANDID':", o:["Frank and honest", "Secretive", "Complicated", "Polite"], a:0, e:"Candid means straightforward, open, and truthful."},
+            {s:'eng', q:"90. Choose correct passive voice: 'The manager signed the document.'", o:["The document was signed by the manager.", "The document is signed by manager.", "Document had signed by manager.", "Manager was signing document."], a:0, e:"Simple past passive: Object + was/were + V3 + by subject."},
+            {s:'eng', q:"91. Synonym of 'PRAGMATIC':", o:["Theoretical", "Practical", "Idealistic", "Arrogant"], a:1, e:"Pragmatic means guided by practical considerations."},
+            {s:'eng', q:"92. Antonym of 'TRANSIENT':", o:["Permanent", "Fleet", "Brief", "Temporary"], a:0, e:"Transient = temporary; Antonym = Permanent."},
+            {s:'eng', q:"93. Select correct preposition: 'He is proficient _____ multiple programming languages.'", o:["at", "in", "with", "on"], a:1, e:"Correct idiom: proficient 'in' a skill or language."},
+            {s:'eng', q:"94. Choose correct sentence:", o:["Scarcely had he left when it started raining.", "Scarcely he left than it started raining.", "Scarcely had he left then it started raining.", "Scarcely did he left when raining started."], a:0, e:"'Scarcely... when' pair takes inverted past perfect verb."},
+            {s:'eng', q:"95. Meaning of 'EPHEMERAL':", o:["Long-lasting", "Short-lived", "Heavy", "Ancient"], a:1, e:"Ephemeral = lasting for a very short time."},
+            {s:'eng', q:"96. (RC Passage) 'Urban green spaces provide health benefits, but sustaining them requires municipal funding and community effort.' Main idea:", o:["Parks solve heat issues", "Maintenance requires ongoing funding and local effort", "Gardens need no government help", "Cities should stop building roads"], a:1, e:"The passage emphasizes that upkeep relies on funding and community support."},
+            {s:'eng', q:"97. Antonym of 'EXACERBATE':", o:["Worsen", "Improve / Soothe", "Trigger", "Multiply"], a:1, e:"Exacerbate = make worse; Antonym = improve/soothe."},
+            {s:'eng', q:"98. 'He is senior _____ me in position.'", o:["than", "to", "from", "with"], a:1, e:"Adjectives ending in '-ior' (senior, junior, superior) take 'to', not 'than'."},
+            {s:'eng', q:"99. Meaning of 'AMBIGUOUS':", o:["Unclear or open to double interpretation", "Extremely clear", "Ambitious", "Vocal"], a:0, e:"Ambiguous means having more than one possible meaning."},
+            {s:'eng', q:"100. Select word best filling blank: 'The scientist was praised for her _____ attention to detail.'", o:["careless", "meticulous", "hasty", "superficial"], a:1, e:"Meticulous = showing great attention to detail; precise."}
+        ];
+
+        let currentIndex = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let status = new Array(questions.length).fill('not-visited');
+        let timerInterval = null;
+
+        function initTest() {
+            renderPalette();
+            loadQuestion(0);
+            startTimer(90 * 60);
+        }
+
+        function loadQuestion(index) {
+            currentIndex = index;
+            const q = questions[index];
+            if (status[index] === 'not-visited') status[index] = 'not-answered';
+
+            document.getElementById('q-number').innerText = `Question ${index + 1} of 100 [Section: ${getSectionLabel(q.s)}]`;
+            document.getElementById('q-text').innerHTML = q.q;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            q.o.forEach((opt, i) => {
+                const li = document.createElement('li');
+                li.className = 'option-item';
+                li.innerHTML = `
+                    <input type="radio" name="opt" id="opt_${i}" value="${i}" ${userAnswers[index] === i ? 'checked' : ''}>
+                    <label for="opt_${i}">${opt}</label>
+                `;
+                li.onclick = () => {
+                    document.getElementById(`opt_${i}`).checked = true;
+                    userAnswers[index] = i;
+                };
+                optionsContainer.appendChild(li);
+            });
+
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            const activeTab = document.getElementById(`tab-${q.s}`);
+            if (activeTab) activeTab.classList.add('active');
+            renderPalette();
+        }
+
+        function getSectionLabel(sec) {
+            if(sec==='chem') return "Chemical Engg";
+            if(sec==='quant') return "Quantitative Aptitude";
+            if(sec==='reason') return "Logical Reasoning";
+            return "General English";
+        }
+
+        function renderPalette() {
+            const grid = document.getElementById('palette-grid');
+            grid.innerHTML = '';
+            questions.forEach((_, i) => {
+                const btn = document.createElement('button');
+                btn.className = `q-btn ${status[i]}`;
+                if (i === currentIndex) btn.classList.add('current');
+                btn.innerText = i + 1;
+                btn.onclick = () => loadQuestion(i);
+                grid.appendChild(btn);
+            });
+        }
+
+        function nextQuestion() {
+            if (userAnswers[currentIndex] !== null && status[currentIndex] !== 'marked') {
+                status[currentIndex] = 'answered';
+            }
+            if (currentIndex < questions.length - 1) loadQuestion(currentIndex + 1);
+            else renderPalette();
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) loadQuestion(currentIndex - 1);
+        }
+
+        function clearResponse() {
+            userAnswers[currentIndex] = null;
+            status[currentIndex] = 'not-answered';
+            loadQuestion(currentIndex);
+        }
+
+        function markForReview() {
+            status[currentIndex] = 'marked';
+            if (currentIndex < questions.length - 1) loadQuestion(currentIndex + 1);
+            else renderPalette();
+        }
+
+        function switchSection(sectionName) {
+            const index = questions.findIndex(q => q.s === sectionName);
+            if (index !== -1) loadQuestion(index);
+        }
+
+        function startTimer(durationSeconds) {
+            let timeLeft = durationSeconds;
+            const display = document.getElementById('timer-display');
+            
+            function updateDisplay() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                display.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+
+            updateDisplay();
+
+            if (timerInterval) clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                } else {
+                    updateDisplay();
+                }
+            }, 1000);
+        }
+
+        function submitTest() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            let score = 0, attempted = 0;
+            const solContainer = document.getElementById('solutions-container');
+            solContainer.innerHTML = '';
+
+            questions.forEach((q, i) => {
+                const isCorrect = userAnswers[i] === q.a;
+                if (userAnswers[i] !== null) attempted++;
+                if (isCorrect) score++;
+
+                const solDiv = document.createElement('div');
+                solDiv.className = 'review-item';
+                solDiv.innerHTML = `
+                    <p><strong>Q${i + 1}: ${q.q}</strong></p>
+                    <p>Your Answer: ${userAnswers[i] !== null ? q.o[userAnswers[i]] : '<span style="color:red">Unanswered</span>'}</p>
+                    <p>Correct Answer: <span style="color:green">${q.o[q.a]}</span></p>
+                    <p style="color:#555; margin-top:2px;"><em>Explanation: ${q.e}</em></p>
+                `;
+                solContainer.appendChild(solDiv);
+            });
+
+            document.getElementById('score-text').innerText = `Score: ${score} / 100`;
+            const acc = attempted > 0 ? ((score / attempted) * 100).toFixed(1) : 0;
+            document.getElementById('accuracy-text').innerText = `Accuracy: ${acc}% | Attempted: ${attempted}/100`;
+            document.getElementById('result-modal').style.display = 'flex';
+        }
+
+        document.addEventListener('DOMContentLoaded', initTest);
+    </script>
+</body>
+</html>
